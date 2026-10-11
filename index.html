@@ -1,0 +1,1697 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A running record of Om Kulkarni's work: OSS contributions, projects, milestones, coding profiles, systems depth, and work experience. Backup reference site.">
+<title>My Work</title>
+<style>
+  html, body { margin: 0; padding: 0; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+
+  /* layout: a terminal/changelog reading, dark-first, amber phosphor accent on warm charcoal */
+  :root {
+    --bg: #120f0b;
+    --surface: #1a1611;
+    --surface-raised: #211b14;
+    --border: #3a311f;
+    --fg: #ece3d1;
+    --fg-muted: #8c7f64;
+    --accent: #e8a33d;
+    --accent-dim: #9c7a3a;
+    --accent-soft: #2e2311;
+    --danger: #d9705a;
+    --font-display: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+    --font-body: 'IBM Plex Sans', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #f6f2e8;
+      --surface: #ffffff;
+      --surface-raised: #fbf7ee;
+      --border: #ddd2b4;
+      --fg: #24201a;
+      --fg-muted: #756a4e;
+      --accent: #a8651a;
+      --accent-dim: #b98a4c;
+      --accent-soft: #f0e3c4;
+      --danger: #b0442f;
+      color-scheme: light;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #f6f2e8;
+    --surface: #ffffff;
+    --surface-raised: #fbf7ee;
+    --border: #ddd2b4;
+    --fg: #24201a;
+    --fg-muted: #756a4e;
+    --accent: #a8651a;
+    --accent-dim: #b98a4c;
+    --accent-soft: #f0e3c4;
+    --danger: #b0442f;
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    padding-inline: 16px;
+    padding-block: 48px;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  header {
+    margin-bottom: 40px;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--fg-muted);
+  }
+  .eyebrow .path { color: var(--accent); }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 5vw, 2.3rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0.35em 0 0.2em;
+    text-wrap: balance;
+  }
+  .cursor {
+    display: inline-block;
+    width: 0.5em;
+    height: 1em;
+    margin-left: 0.15em;
+    background: var(--accent);
+    vertical-align: -0.1em;
+    animation: blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  .sub {
+    color: var(--fg-muted);
+    font-size: 0.98rem;
+    max-width: 65ch;
+  }
+  section {
+    margin-bottom: 36px;
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    margin: 0 0 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-transform: uppercase;
+  }
+  h2 .n {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--bg);
+    background: var(--accent);
+    border-radius: 4px;
+    padding: 2px 6px;
+    letter-spacing: 0;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 20px;
+  }
+  p { line-height: 1.6; margin: 0 0 10px; }
+  p:last-child { margin-bottom: 0; }
+  ul {
+    margin: 0;
+    padding-left: 1.1em;
+    line-height: 1.65;
+  }
+  li { margin-bottom: 6px; }
+  li:last-child { margin-bottom: 0; }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+  }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 3px 9px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+  .muted { color: var(--fg-muted); font-size: 0.92rem; }
+  .pending {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.03em;
+    color: var(--fg-muted);
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    padding: 2px 7px;
+    margin-top: 10px;
+  }
+  a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--border); text-underline-offset: 2px; }
+  a:hover { text-decoration-color: var(--accent); }
+  footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--fg-muted);
+  }
+
+  nav.toc {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 10;
+    background: var(--surface-raised);
+    border-bottom: 1px solid var(--border);
+    margin: -48px -16px 40px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  nav.toc::before {
+    content: '$';
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+    flex: 0 0 auto;
+    margin-right: 2px;
+  }
+  nav.toc a {
+    flex: 0 0 auto;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    color: var(--fg-muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 5px 11px;
+    white-space: nowrap;
+  }
+  nav.toc a:hover,
+  nav.toc a:focus-visible {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  nav.toc a.active {
+    color: var(--bg);
+    background: var(--accent);
+    border-color: var(--accent);
+    font-weight: 500;
+  }
+  section { scroll-margin-top: calc(56px + env(safe-area-inset-top, 0px)); }
+
+  .project {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+  .project:last-child { margin-bottom: 0; }
+  .project-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .project-title { font-weight: 600; font-size: 1rem; }
+  .project-type { color: var(--fg-muted); font-size: 0.88rem; }
+  .project-meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--fg-muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+    margin-bottom: 10px;
+  }
+  .project-stack {
+    font-size: 0.82rem;
+    color: var(--fg-muted);
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  .project ul { font-size: 0.93rem; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .stat {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px 10px;
+    background: var(--bg);
+  }
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  .oss-category { margin-bottom: 26px; }
+  .oss-category:last-child { margin-bottom: 0; }
+  .oss-category-title {
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0 0 6px;
+  }
+  .oss-category-summary {
+    color: var(--fg-muted);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin: 0 0 12px;
+    max-width: 68ch;
+  }
+  .oss-item {
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: 0;
+    background: var(--surface);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    transition: border-color 0.15s ease;
+  }
+  .oss-item:hover { border-color: color-mix(in srgb, var(--fg) 25%, var(--border)); }
+  .oss-item:last-child { margin-bottom: 0; }
+  .oss-item-head { margin-bottom: 8px; }
+  .oss-item-repo {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    border: 1px solid var(--border);
+    padding: 3px 7px;
+    margin-bottom: 8px;
+  }
+  .oss-item-title { display: block; font-weight: 600; font-size: 0.95rem; }
+  .oss-item-links {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .oss-item-links a {
+    border: 1px solid var(--border);
+    padding: 3px 7px;
+    text-decoration: none;
+    color: var(--fg-muted);
+  }
+  .oss-item-links a:hover { border-color: var(--accent); color: var(--accent); }
+  .oss-item ul { font-size: 0.88rem; }
+
+  .oss-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .oss-nav button {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 0;
+    padding: 7px 12px;
+    cursor: pointer;
+  }
+  .oss-nav button:hover { color: var(--fg); border-color: color-mix(in srgb, var(--fg) 35%, var(--border)); }
+  .oss-nav button.active {
+    color: var(--fg);
+    background: var(--accent-soft);
+    border-color: var(--accent);
+  }
+  .oss-nav .count { color: var(--fg-muted); text-transform: none; letter-spacing: 0; font-weight: 400; }
+  .oss-project { display: flex; flex-direction: column; gap: 8px; }
+  .oss-project-btn .arrow {
+    display: inline-block;
+    transition: transform 0.15s ease;
+    font-size: 0.65em;
+  }
+  .oss-project-btn[aria-expanded="true"] .arrow { transform: rotate(90deg); }
+  .oss-project-btn[aria-expanded="true"] {
+    color: var(--fg);
+    background: var(--accent-soft);
+    border-color: var(--accent);
+  }
+  .oss-subrepos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 0 2px 16px;
+    border-left: 1px dashed var(--border);
+    margin-left: 6px;
+  }
+  .stat-value {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--fg-muted);
+    margin-top: 2px;
+  }
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+</head>
+<body>
+
+<nav class="toc" aria-label="Section navigation">
+  <a href="#all" id="nav-all">all</a>
+  <a href="#work-experience">work-experience</a>
+  <a href="#oss-work">oss-work</a>
+  <a href="#personal-projects">projects</a>
+  <a href="#achievements">milestones</a>
+  <a href="#coding-portfolio">coding-portfolio</a>
+  <a href="#system-design">system-design</a>
+  <a href="#collab">collab</a>
+</nav>
+
+<main>
+  <header>
+    <div class="eyebrow"><span class="path">om7057@work</span>:~$ cat README</div>
+    <h1>My Work<span class="cursor"></span></h1>
+    <p class="sub">A running record of everything on file: open source, projects, milestones, competitive profiles, systems depth, and work experience. Sections marked pending are placeholders waiting on details from you, not guesses.</p>
+  </header>
+
+  <section id="work-experience">
+    <h2><span class="n">01</span> Work Experience</h2>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">Rocket Software</span>
+        <span class="project-type">| Software Engineer, Trainee</span>
+      </div>
+      <div class="project-stack">Java 21, Spring Boot 4.1, React, Vite, Docker, Jenkins, Redis, JWT Authentication, RBAC, OpenAPI</div>
+      <div class="project-meta">
+        <span>Jun 2026 - Present</span>
+      </div>
+      <ul>
+        <li>Architected and delivered SLTS (Software License Tracking System), a production-grade enterprise SaaS platform managing 500+ software licenses, 200+ user accounts, and $2M+ in annual license spend across 15+ global offices with real-time compliance tracking.</li>
+        <li>Engineered a high-performance RESTful API spanning 40+ endpoints with Spring Boot 4.1 and Java 21, implementing JWT-based authentication (15-minute access tokens, 7-day refresh rotation), RBAC across 4 permission tiers, and adaptive rate limiting that blocks attackers after 5 failed attempts within 2-minute windows.</li>
+        <li>Designed a normalized, multi-entity relational schema with 6 core domain models (Users, Licenses, Assignments, Offices, Audit, Notifications) supporting 11 license types and 9 department hierarchies; enforced complex business rules including atomic seat allocation, duplicate-prevention logic, and cascading soft-delete patterns to prevent orphaned references.</li>
+        <li>Built a Redis caching layer that reduced database queries by 65%, using a configurable 60-minute TTL for frequently accessed licenses and LRU eviction to maintain sub-50ms dashboard load times for analytics workloads processing 10K+ monthly assignment operations.</li>
+        <li>Implemented a zero-trust authorization model with method-level security annotations controlling 25+ protected operations, enabling procurement managers to analyze vendor spend distribution across $500K+ procurement budgets while restricting sensitive cost data from 150+ regular employees.</li>
+        <li>Developed a forensic-grade audit logging system capturing 15+ event types across all CRUD operations with immutable, append-only trails, enabling compliance teams to reconstruct complete entity lifecycle histories with millisecond precision and actor attribution for SOC 2 Type II readiness.</li>
+        <li>Containerized the full application stack with Docker Compose, orchestrating a 3-tier architecture (MySQL 8.0, Redis 7, application layer) with health-check-gated startup sequencing, automated volume backup workflows, and environment variable injection to support seamless dev-to-prod promotion.</li>
+        <li>Built a responsive React 19 + Vite frontend delivering role-adaptive interfaces with command palette (Cmd+K) navigation, real-time WebSocket notifications, one-click CSV export for 1000+ license records, and an interactive dashboard visualizing license utilization across 50+ active contracts with expiry prediction alerts 30 days in advance.</li>
+        <li>Integrated a self-documenting OpenAPI 3.0 specification with Swagger UI, enabling zero-setup API exploration across 40+ endpoints; reduced downstream integration time by 70% and eliminated 90% of "how do I authenticate?" support tickets through embedded JWT token management.</li>
+        <li>Configured a Jenkins CI/CD pipeline executing a 3-stage validation flow (Maven compile + 25 unit tests, npm build + bundle optimization, artifact packaging) in under 4 minutes, enabling 3x daily deployments to staging with zero-downtime rollout strategies.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">CoinSwitch</span>
+        <span class="project-type">| Software Development Engineer Intern</span>
+      </div>
+      <div class="project-stack">Go, gRPC, REST, NATS JetStream, Docker, PostgreSQL, Redis, AWS, Kubernetes</div>
+      <div class="project-meta">
+        <span>Jan 2026 - May 2026</span>
+      </div>
+      <ul>
+        <li>Architected and enhanced a production-grade Go microservice (<code>vendor_adapter</code>) bridging internal trading systems and external OMS (Kambala/Noren), exposing REST (HTTP/1.1) and gRPC (HTTP/2) APIs while orchestrating real-time order, position, and holdings streaming via NATS JetStream with at-least-once delivery semantics.</li>
+        <li>Designed and implemented environment-isolated configuration architecture by splitting OMS connection configs into multi-environment XMLs (prod/preprod/UAT) and enabling runtime configuration selection via container entrypoint scripts, enforcing 12-factor principles ("build once, deploy many") and eliminating cross-environment traffic risks in trading workflows.</li>
+        <li>Engineered a secure secrets management pipeline by replacing hardcoded CAPI license keys with runtime environment injection and file materialization using strict Unix file permissions (0600/0700), ensuring compliance with least-privilege principles and enabling seamless secret rotation without code changes.</li>
+        <li>Implemented fail-fast initialization and singleton client setup using <code>sync.Once</code>, enforcing deterministic service startup with strict dependency ordering (env &rarr; config &rarr; SDK init &rarr; login), eliminating fail-silent scenarios and preventing nil-pointer crashes in high-frequency trading operations.</li>
+        <li>Built a resilient subscription management system with concurrent-safe state tracking (<code>sync.Map</code>) and reconnect-and-replay mechanisms, enabling automatic resubscription of order/position/holdings streams after transient OMS disconnections and ensuring fault-tolerant real-time data propagation.</li>
+        <li>Developed end-to-end distributed tracing infrastructure for gRPC services using interceptor chains, propagating trace IDs (req-id, span-id, AWS trace, New Relic trace) via HTTP/2 metadata and enriching request contexts, enabling full request lifecycle correlation across microservices and reducing debugging effort for production incidents.</li>
+        <li>Engineered a structured logging framework across REST, gRPC, and asynchronous SDK callback layers, replacing unstructured logs with machine-parseable key-value formats, integrating request-level correlation IDs, and enabling log-based observability pipelines (ELK/Loki) for real-time monitoring and alerting.</li>
+        <li>Implemented request lifecycle middleware for REST services with pre/post hooks, logging request initiation, response status, and latency with severity-based classification (INFO/WARN/ERROR), improving signal-to-noise ratio and enabling accurate SLI/SLO-based alerting.</li>
+        <li>Designed a reflection-based structured response logging system to serialize complex response objects into queryable log formats, enabling fine-grained analytics on order failures, response codes, and trading outcomes without reliance on regex parsing.</li>
+        <li>Integrated trace-aware logging into the asynchronous CGo callback layer bridging Go and the C++ OMS SDK, ensuring end-to-end correlation between incoming gRPC requests and asynchronous OMS responses using request ID propagation across FFI boundaries.</li>
+        <li>Optimized the containerization and deployment pipeline using multi-stage Docker builds, reducing runtime image size and attack surface while enabling environment-driven configuration binding at runtime through entrypoint scripts and process-level environment variables.</li>
+        <li>Applied advanced OS and concurrency concepts including process signal handling (PID 1, <code>exec</code>), file descriptor lifecycle management, TCP keepalive tuning, goroutine-based background cleanup tasks, and cooperative cancellation using <code>context.Context</code> for efficient resource utilization under high-throughput workloads.</li>
+        <li>Strengthened system observability and debuggability by introducing error-boundary logging across all gRPC handlers, ensuring all failure paths are captured with full trace context, eliminating silent failures and enabling rapid root-cause analysis in distributed trading systems.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">ConnectWise LLP</span>
+        <span class="project-type">| Engineering Intern (On-Site, Pune)</span>
+      </div>
+      <div class="project-stack">Go, PostgreSQL (Aurora), Kafka, Docker, AWS, GitLab CI/CD</div>
+      <div class="project-meta">
+        <span>Jun 2025 - Jul 2025</span>
+      </div>
+      <ul>
+        <li>Engineered a production-grade entitlement client in Go with robust HTTP handling, config-driven endpoint resolution, and custom transport-layer abstractions, enabling reliable integration with external services and improving testability through mock-based unit testing frameworks.</li>
+        <li>Implemented a Hystrix-inspired circuit breaker pattern for external service communication, tuning failure thresholds, timeout windows, and fallback strategies to ensure graceful degradation and improve system resilience under partial outages.</li>
+        <li>Designed and developed partner onboarding/offboarding workflows within Device Service, incorporating shard-aware data routing, entitlement validation, and controlled ingestion/retention pipelines to ensure scalable and consistent partner lifecycle management.</li>
+        <li>Contributed to the PostgreSQL (Aurora) sharding architecture by implementing partner-based shard mapping and cache-first read strategies, optimizing query performance and enabling horizontal scalability while maintaining data locality and efficient load distribution.</li>
+        <li>Evaluated and improved system reliability through distributed system design considerations, including high availability (HA), throughput optimization, and observability strategies for sharded database environments.</li>
+        <li>Built and operationalized end-to-end testing pipelines using local service mocks, Postman-driven API validation, and Kafka-based event flow verification, ensuring correctness of distributed workflows and validating resilience mechanisms under failure scenarios.</li>
+        <li>Demonstrated system robustness through controlled failure simulations and resilience testing (circuit breaker state transitions, service degradation scenarios), enabling validation of fault-tolerant behavior in microservice interactions.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="oss-work">
+    <h2><span class="n">02</span> OSS Work</h2>
+    <p class="sub" style="margin-bottom:16px">Enough merged work (20+ PRs) that <strong>OpenTelemetry invited you to vote in its Governing Committee election</strong>. Filterable by repo, same as the portfolio's Open Source Explorer.</p>
+
+    <div class="oss-nav" role="tablist" aria-label="Filter by repo">
+      <div class="oss-project">
+        <button type="button" class="oss-project-btn" data-project-toggle="OpenTelemetry"><span class="arrow">&#9656;</span> OpenTelemetry <span class="count">(32)</span></button>
+        <div class="oss-subrepos" hidden>
+          <button type="button" data-oss-repo="OpenTelemetry C++ SDK" class="active">OpenTelemetry C++ SDK <span class="count">(11)</span></button>
+          <button type="button" data-oss-repo="OpenTelemetry Compile Instrumentation">OpenTelemetry Compile Instrumentation <span class="count">(10)</span></button>
+          <button type="button" data-oss-repo="OpenTelemetry Go Contrib">OpenTelemetry Go Contrib <span class="count">(5)</span></button>
+          <button type="button" data-oss-repo="OpenTelemetry Go">OpenTelemetry Go <span class="count">(3)</span></button>
+          <button type="button" data-oss-repo="OpenTelemetry Collector Contrib">OpenTelemetry Collector Contrib <span class="count">(1)</span></button>
+          <button type="button" data-oss-repo="OpenTelemetry Semantic Conventions">OpenTelemetry Semantic Conventions <span class="count">(1)</span></button>
+          <button type="button" data-oss-repo="OpenTelemetry Weaver">OpenTelemetry Weaver <span class="count">(1)</span></button>
+        </div>
+      </div>
+      <div class="oss-project">
+        <button type="button" class="oss-project-btn" data-project-toggle="Jenkins"><span class="arrow">&#9656;</span> Jenkins <span class="count">(11)</span></button>
+        <div class="oss-subrepos" hidden>
+          <button type="button" data-oss-repo="Jenkins OpenTelemetry Plugin">Jenkins OpenTelemetry Plugin <span class="count">(6)</span></button>
+          <button type="button" data-oss-repo="Jenkins Remoting">Jenkins Remoting <span class="count">(5)</span></button>
+        </div>
+      </div>
+      <div class="oss-project">
+        <button type="button" class="oss-project-btn" data-project-toggle="Jaeger"><span class="arrow">&#9656;</span> Jaeger <span class="count">(8)</span></button>
+        <div class="oss-subrepos" hidden>
+          <button type="button" data-oss-repo="Jaeger">Jaeger <span class="count">(7)</span></button>
+          <button type="button" data-oss-repo="Jaeger IDL">Jaeger IDL <span class="count">(1)</span></button>
+        </div>
+      </div>
+      <button type="button" data-oss-repo="GoFr">GoFr <span class="count">(5)</span></button>
+      <button type="button" data-oss-repo="Prometheus">Prometheus <span class="count">(3)</span></button>
+      <button type="button" data-oss-repo="Liquibase">Liquibase <span class="count">(2)</span></button>
+      <button type="button" data-oss-repo="Apicurio Registry">Apicurio Registry <span class="count">(1)</span></button>
+      <button type="button" data-oss-repo="Argo CD">Argo CD <span class="count">(1)</span></button>
+      <button type="button" data-oss-repo="HAMi">HAMi <span class="count">(1)</span></button>
+    </div>
+
+    <div class="oss-category" data-cat="cardinality">
+      <h3 class="oss-category-title">Observability Cardinality Control</h3>
+      <p class="oss-category-summary">Telemetry systems fail differently: not a crash, but an attribute or limit that quietly lets a metric or log label grow unbounded until it becomes a cost or performance problem for whoever's running it.</p>
+
+      <div class="oss-item" data-repo="OpenTelemetry C++ SDK" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Configurable per-instrument-type cardinality limits for the Metrics SDK</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry C++ SDK</span><a href="https://github.com/open-telemetry/opentelemetry-cpp/pull/4188">PR</a><a href="https://github.com/open-telemetry/opentelemetry-cpp/issues/3292">Issue</a></div>
+        <ul>
+          <li>The Metrics SDK hardcoded a 2000 cardinality limit and silently discarded any user-supplied override from declarative YAML config.</li>
+          <li>Wired a configurable limit through MetricReader and CollectorHandle end-to-end, fixing a sentinel-value bug along the way; a follow-up fix (#4314) closed a gap where histogram views setting only a cardinality limit were silently rejected.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Go Contrib" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Unbounded network.peer.address cardinality from pooled connection IDs</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go Contrib (otelmongo)</span><a href="https://github.com/open-telemetry/opentelemetry-go-contrib/pull/9352">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go-contrib/issues/9275">Issue</a></div>
+        <ul>
+          <li>Pooled connection ID suffixes from the Mongo driver broke host/port parsing, so the fallback path used the whole per-connection string as the hostname, unique per connection instead of stable per host.</li>
+          <li>Stripped the suffix before parsing and ported the identical fix to the older v1 instrumentation package.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Compile Instrumentation" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Missing runtime disable gate for a cardinality-risk attribute</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go (Compile Instrumentation)</span><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/pull/840">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/issues/839">Issue</a></div>
+        <ul>
+          <li>gin's instrumentation set http.route unconditionally, a real cardinality risk on large routers, and OTEL_GO_DISABLED_INSTRUMENTATIONS=gin had no effect since it never checked the runtime gate every other package used.</li>
+          <li>Gave gin its own instrumentation key and hardened the enable/disable check against the env var changing mid-request.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="oss-category" data-cat="spec">
+      <h3 class="oss-category-title">Specification Compliance</h3>
+      <p class="oss-category-summary">Places where an implementation had quietly drifted from what the spec actually requires, usually invisible until someone compares behavior against another language's SDK.</p>
+
+      <div class="oss-item" data-repo="OpenTelemetry Weaver" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Ported fallback-only enum suppression to the Weaver markdown templates</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Weaver</span><a href="https://github.com/open-telemetry/opentelemetry-weaver-packages/pull/66">PR</a></div>
+        <ul>
+          <li>An enum whose only non-deprecated member is its fallback value, like error.type's other, generated a well-known-values table with nothing left to document once semantic-conventions started suppressing it. This package's own markdown templates hadn't been updated to match.</li>
+          <li>Ported the same filter to both the shared enum-table macro and the namespace README template, which builds its own independent enum list, and added a single-member fixture to the golden test output to confirm normal enums still render.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Compile Instrumentation" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">GenAI spans now record server.address and server.port</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go (Compile Instrumentation)</span><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/pull/1427">PR</a></div>
+        <ul>
+          <li>Continued a stalled PR that had review threads open. Added a shared HTTPServerEndpoint helper wired into the Anthropic and OpenAI middlewares so GenAI spans carry the server address and port.</li>
+          <li>Closed the open review threads with port-parsing tests and https default-port coverage across the OpenAI v1, v2, and v3 copies.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry C++ SDK" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">EnvironmentCarrier didn't normalize empty keys</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry C++ SDK</span><a href="https://github.com/open-telemetry/opentelemetry-cpp/pull/4264">PR</a><a href="https://github.com/open-telemetry/opentelemetry-cpp/issues/4190">Issue</a></div>
+        <ul>
+          <li>Get("")/Set("") silently touched the wrong slot instead of normalizing to "_", a spec violation, fixed alongside documenting the caching contract's string_view lifetime guarantees.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry C++ SDK" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">LoggerConfig missing declarative-configuration attributes</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry C++ SDK</span><a href="https://github.com/open-telemetry/opentelemetry-cpp/pull/4131">PR</a><a href="https://github.com/open-telemetry/opentelemetry-cpp/issues/4130">Issue</a></div>
+        <ul>
+          <li>minimum_severity and trace_based were missing from LoggerConfig's YAML configuration path, so file-configured loggers silently ignored severity filtering.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry C++ SDK" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">OTEL_RESOURCE_ATTRIBUTES values weren't percent-decoded</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry C++ SDK</span><a href="https://github.com/open-telemetry/opentelemetry-cpp/pull/4364">PR</a><a href="https://github.com/open-telemetry/opentelemetry-cpp/issues/1536">Issue</a></div>
+        <ul>
+          <li>Values were stored raw instead of percent-decoded per the W3C Baggage grammar the spec defers to, so key=hello%20world produced the literal string instead of "hello world".</li>
+          <li>Caught and fixed a real operator-precedence bug during review: &lt;&lt; binds looser than +, so combining hex nibbles with + rather than | would have silently miscomputed the decoded byte.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Go Contrib" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">network.protocol.version read from the request, not the negotiated response</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go Contrib (otelhttp)</span><a href="https://github.com/open-telemetry/opentelemetry-go-contrib/pull/9371">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go-contrib/issues/9007">Issue</a></div>
+        <ul>
+          <li>HTTP/2 connections negotiated over ALPN were misreported as HTTP/1.1 in spans and metrics; fixed at the shared semconv template and regenerated across all six consumer packages.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="oss-category" data-cat="codehealth">
+      <h3 class="oss-category-title">Code Health &amp; Static Analysis</h3>
+      <p class="oss-category-summary">Mechanical lint sweeps and tooling-correctness fixes that keep a project's own build, codegen, and CI pipeline honest, work that closes out a backlog rather than adding user-facing features.</p>
+
+      <div class="oss-item" data-repo="OpenTelemetry C++ SDK" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Qualified C library calls with std:: after a header modernization</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry C++ SDK</span><a href="https://github.com/open-telemetry/opentelemetry-cpp/pull/4356">PR</a></div>
+        <ul>
+          <li>Swapping deprecated C headers for their C++ equivalents left calls like memcpy, strcmp, and strtod unqualified, relying on implementations happening to expose them globally, which the standard does not guarantee.</li>
+          <li>Added std:: to those call sites across api, sdk, exporters, ext, examples, and functional, plus the includes that had relied on transitive inclusion, leaving vendored code untouched.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry C++ SDK" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Header used uint8_t without including the header that defines it</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry C++ SDK</span><a href="https://github.com/open-telemetry/opentelemetry-cpp/pull/4574">PR</a></div>
+        <ul>
+          <li>predicate_factory.h used uint8_t without including cstdint, compiling only because another header in the same translation unit happened to pull it in.</li>
+          <li>Added the missing include directly to the header that needs it, so it builds in isolation and under standard libraries without that transitive include.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry C++ SDK" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Anonymous-namespace linkage cleanup (misc-use-internal-linkage)</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry C++ SDK</span><a href="https://github.com/open-telemetry/opentelemetry-cpp/pull/4350">PR</a><a href="https://github.com/open-telemetry/opentelemetry-cpp/issues/4196">Issue</a></div>
+        <ul>
+          <li>Closed out a long-running clang-tidy tracking issue by wrapping the last four file-local symbol groups in anonymous namespaces, reducing ODR risk on symbols with no header exposure.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry C++ SDK" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Deprecated C header migration (modernize-deprecated-headers)</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry C++ SDK</span><a href="https://github.com/open-telemetry/opentelemetry-cpp/pull/4349">PR</a><a href="https://github.com/open-telemetry/opentelemetry-cpp/issues/4348">Issue</a></div>
+        <ul>
+          <li>Swept ~90 files from legacy C headers to their C++ equivalents, fixing IWYU's mappings first so it would stop recommending the headers being removed; excluded vendored code a reviewer flagged as out of scope.</li>
+          <li>Filed a scoped follow-up (#4356) for the std:: qualification gap the header swap exposed, rather than scope-creeping it into the same PR.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Go" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Reenabled the context-as-argument revive linter repo-wide</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go</span><a href="https://github.com/open-telemetry/opentelemetry-go/pull/8718">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go/issues/3372">Issue</a></div>
+        <ul>
+          <li>The rule had been disabled for a viper compatibility constraint that no longer applies, and the repo already conformed except for a handful of unexported functions and test helpers with ctx in the wrong position.</li>
+          <li>Reordered parameters across three files and reenabled the rule; verified 0 lint issues across all 27 modules with no exported API or runtime behavior change.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Compile Instrumentation" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Blank-receiver methods generated invalid trampoline code</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go (Compile Instrumentation)</span><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/pull/799">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/issues/798">Issue</a></div>
+        <ul>
+          <li>collectArguments already remapped unnamed and blank parameters to generated names so their addresses could be taken safely, but missed blank receivers (func (_ MyType) Method()), producing invalid Go (&amp;_) or tripping a debug-build assertion.</li>
+          <li>Extended the existing _ignoredParam&lt;N&gt; remapping to cover blank receivers too, consistent with how unnamed/blank parameters were already handled.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Compile Instrumentation" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Trampoline codegen discarded a receiver's real generic constraint</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go (Compile Instrumentation)</span><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/pull/1122">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/issues/1121">Issue</a></div>
+        <ul>
+          <li>extractReceiverTypeParams widened every extracted receiver type parameter to any, discarding the real constraint declared on the type (e.g. type Set[T comparable]), a generated trampoline body operating on that parameter under its real constraint would produce Go that doesn't compile.</li>
+          <li>Added lookup logic that recovers the original constraint from the receiver's own generic type declaration, matching type parameters positionally rather than by name since a method receiver can rename them relative to the declaration.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Compile Instrumentation" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Codecov flag mis-scoping made an unrelated CI check block merges</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go (Compile Instrumentation)</span><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/pull/857">PR</a></div>
+        <ul>
+          <li>Diagnosed a repo-wide-red codecov/project/tool check to a coverage upload step that wasn't restricting files to tool/, so the flag measured the whole repo instead of the 63 files it claimed to.</li>
+          <li>Scoped each upload step to its own profile with disable_search: true, taking the flag from a failing ~65% back to the real 78.8%.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Go" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Closed out a standing golangci-lint TODO: doc comments on every exported internal symbol</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go</span><a href="https://github.com/open-telemetry/opentelemetry-go/pull/8937">PR</a></div>
+        <ul>
+          <li>.golangci.yml had a standing TODO on the revive exported-internal-packages exclusion: exported symbols in internal packages still deserved doc comments, but nobody had gone through and added them. Removing the exclusion cold surfaced 100+ violations across most exporter packages, too much for one PR, so measured the scope first and sliced it into six incremental PRs (#8752, #8762, #8869, #8926, #8934, #8937), each covering a few packages without removing the exclusion until the last one.</li>
+          <li>Two of the modules (otlptrace/otlpmetric's grpc+http pairs) share generated files via templates, so the later slices edited the shared .tmpl files and regenerated with gotmpl instead of duplicating the same doc comments across both consumer modules.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Go" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Verified and closed a "handle this error better" TODO instead of taking it at face value</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go</span><a href="https://github.com/open-telemetry/opentelemetry-go/pull/8738">PR</a></div>
+        <ul>
+          <li>getAttrs and getScopeAttrs in the Prometheus exporter each carried a // TODO(#7066) Handle this error better. comment on their label-build error path; #7363 had already closed the underlying issue by routing every per-datapoint call site through reportError/NewInvalidMetric, but the stale comments survived the fix.</li>
+          <li>Checked the two remaining callers (createInfoMetric, createResourceAttributes) that still abort the whole collection cycle on error and confirmed that's intentional, a target-info or resource-attribute build failure isn't a single bad datapoint that can be skipped, before removing the comments rather than "fixing" code that wasn't actually broken.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Go Contrib" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">zpages formatted attributes with a deprecated API that also mis-rendered NaN</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go Contrib</span><a href="https://github.com/open-telemetry/opentelemetry-go-contrib/pull/9453">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go-contrib/issues/9008">Issue</a></div>
+        <ul>
+          <li>zpages used the deprecated attribute.Value.Emit to format span attributes for /tracez instead of the documented attribute.Value.String replacement, and Emit wasn't just deprecated, it produced spec-incompliant output: a float64 slice containing NaN rendered as invalid: [NaN 1.5] instead of the spec-compliant ["NaN",1.5].</li>
+          <li>Switched to String and added a regression test that renders a NaN-containing attribute through the real /tracez HTTP handler and asserts the spec-compliant formatting.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Semantic Conventions" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Multi-line YAML briefs silently broke generated markdown tables</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Semantic Conventions</span><a href="https://github.com/open-telemetry/semantic-conventions/pull/4023">PR</a><a href="https://github.com/open-telemetry/semantic-conventions/issues/3073">Issue</a></div>
+        <ul>
+          <li>Several k8s.resourcequota.* metrics declare their brief as a YAML | block scalar with an embedded newline; six markdown templates rendered brief directly into a single-row table cell, so the literal newline split the row across two physical lines and produced the exact "wrong column count" MD055/MD056 errors reported in #3073.</li>
+          <li>Added notes.table_cell(), which collapses embedded newlines to &lt;br&gt;, mirroring the escaping helper the templates already used for a different multiline case, scoped to just the table-breakage root cause rather than also touching the separate bare-URL/MD034 findings in the same issue.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jenkins OpenTelemetry Plugin" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Steps-to-ignore validation rejected a real plugin's valid step name</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jenkins OpenTelemetry Plugin</span><a href="https://github.com/jenkinsci/opentelemetry-plugin/pull/1296">PR</a><a href="https://github.com/jenkinsci/opentelemetry-plugin/issues/1289">Issue</a></div>
+        <ul>
+          <li>doCheckIgnoredSteps validated the "Steps to be ignored" field against [A-Za-z0-9,]*, but the value is actually matched with a plain Set.contains() against StepDescriptor#getFunctionName(), a Java/Groovy identifier with no such restriction. The OpenShift Client Plugin registers its step as _OcAction, a leading underscore that's a perfectly valid identifier, so the field's own validation rejected it before it could ever be saved.</li>
+          <li>Traced the actual matching logic before touching the regex, widened it to allow underscore, and added the field's first test coverage, it had none before.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="oss-category" data-cat="silent-failure">
+      <h3 class="oss-category-title">Silent Failure &amp; Data Loss</h3>
+      <p class="oss-category-summary">The recurring pattern across these contributions: code assumes a value, response, or success case is always present, so when it isn't, the failure comes out as a swallowed error, missing data, or a crash instead of a controlled outcome.</p>
+
+      <div class="oss-item" data-repo="OpenTelemetry Compile Instrumentation" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">AMQP channel teardown never cleaned up its tracking maps</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go (Compile Instrumentation)</span><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/pull/1392">PR</a></div>
+        <ul>
+          <li>Two sync.Map instances keyed by *amqp.Channel had no cleanup path. Nothing removed an entry when a channel closed, so every torn-down channel and any span it still held open stayed reachable forever, an unbounded leak under the normal pattern of opening and discarding short-lived channels.</li>
+          <li>Hooked Channel.shutdown rather than Close, since a lost connection or server-initiated close tears channels down without calling Close, and ended any still-open spans instead of just dropping the map entry.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jaeger" style="border-left:3px solid #60d0e4">
+        <div class="oss-item-head"><span class="oss-item-title">TracesData marshaled to the wrong end of the buffer, corrupting nested messages</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jaeger</span><a href="https://github.com/jaegertracing/jaeger/pull/9629">PR</a></div>
+        <ul>
+          <li>MarshalToSizedBuffer copied its bytes to the start of the buffer rather than the tail the gogo sized-buffer convention expects. Standalone marshaling worked, but nesting TracesData inside another message on the binary gRPC wire corrupted the parent's remaining fields.</li>
+          <li>Found while adding FindSpansResponse, which nests TracesData. Fixed by writing to the tail of the buffer, matching the generated convention.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jaeger" style="border-left:3px solid #60d0e4">
+        <div class="oss-item-head"><span class="oss-item-title">Skill truncation could split a UTF-8 character and corrupt it silently</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jaeger</span><a href="https://github.com/jaegertracing/jaeger/pull/9589">PR</a></div>
+        <ul>
+          <li>read_skill truncated at exactly the max size, which could cut a multi-byte character in half. The invalid UTF-8 was silently replaced with the replacement character wherever it was JSON-encoded, with no sign anything had changed.</li>
+          <li>Backs off to the start of the straddling character before cutting, the same approach truncateForSpan already used, and reports the bytes actually served in the truncation notice.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jenkins OpenTelemetry Plugin" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Loki log paging leaked one pooled HTTP connection per page</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jenkins OpenTelemetry Plugin</span><a href="https://github.com/jenkinsci/opentelemetry-plugin/pull/1304">PR</a></div>
+        <ul>
+          <li>LokiBuildLogsLineIterator replaced each exhausted page without closing its response stream, and skipLines discarded the current page the same way. Only the final page was ever closed, so every intermediate page leaked a connection from a shared pool.</li>
+          <li>Closes each page's stream when the iterator moves past it or skips lines, so connections return to the pool.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry C++ SDK" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Histogram views with only a cardinality limit were silently rejected</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry C++ SDK</span><a href="https://github.com/open-telemetry/opentelemetry-cpp/pull/4314">PR</a></div>
+        <ul>
+          <li>When a view set aggregation_cardinality_limit without an explicit aggregation, AddView always built a plain AggregationConfig. For histogram and exponential-histogram instruments that type didn't match, so the whole view was dropped with a warning and the limit never applied.</li>
+          <li>AddView now resolves the instrument's effective aggregation type the same way the view registry does, so the configured limit takes effect.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="GoFr" style="border-left:3px solid #00adb5">
+        <div class="oss-item-head"><span class="oss-item-title">WebSocket context parented to the wrapper, causing a stack overflow on lookup</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">GoFr</span><a href="https://github.com/gofr-dev/gofr/pull/4170">PR</a></div>
+        <ul>
+          <li>App.WebSocket passed the Context wrapper as the parent of WithValue instead of its embedded context, making the value context self-referential. Any lookup other than the one key that resolves first recursed forever.</li>
+          <li>A stack overflow is a fatal error that recover() cannot catch, and it went unnoticed because the only key the code path looked up resolved before recursing. Fixed by passing the embedded context.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Go Contrib" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Aggregate baggage parse error silently dropped in the ot propagator</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go Contrib</span><a href="https://github.com/open-telemetry/opentelemetry-go-contrib/pull/9395">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go-contrib/issues/9047">Issue</a></div>
+        <ul>
+          <li>extractBags only checked per-member parse errors; once every member parsed individually, a failure from baggage.New's own aggregate limits (64 members, 8192 bytes) was silently discarded instead of returned.</li>
+          <li>Collapsed the two-branch return into a single multierr.Append(err, e) call, which already handles all four nil/non-nil combinations correctly.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Compile Instrumentation" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">OpenAI streaming instrumentation dropped the final SSE chunk</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go (Compile Instrumentation)</span><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/pull/828">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/issues/827">Issue</a></div>
+        <ul>
+          <li>If an SSE stream ended right after its final data line with no trailing newline, that line was buffered and never parsed, silently dropping finish_reason, response id, and token counts from the span.</li>
+          <li>Added a flushRemaining() step before finalize() on any read error, and applied the fix across all three duplicated copies of the reader (v1/v2/v3).</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Prometheus" style="border-left:3px solid #e6522c">
+        <div class="oss-item-head"><span class="oss-item-title">TSDB querier cleanup discarded errors from Close()</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Prometheus</span><a href="https://github.com/prometheus/prometheus/pull/19120">PR</a><a href="https://github.com/prometheus/prometheus/issues/19114">Issue</a></div>
+        <ul>
+          <li>A failing block Close() during multi-block query cleanup surfaced as a successful query with missing data, no error, no log line.</li>
+          <li>Fixed by using errors.Join() to preserve concurrent cleanup failures alongside the primary error, without breaking backward compatibility.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Prometheus" style="border-left:3px solid #e6522c">
+        <div class="oss-item-head"><span class="oss-item-title">IONOS service discovery panicked on optional fields the API omitted</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Prometheus</span><a href="https://github.com/prometheus/prometheus/pull/19418">PR</a><a href="https://github.com/prometheus/prometheus/issues/19417">Issue</a></div>
+        <ul>
+          <li>refresh() dereferenced several omitempty pointer fields with no nil check, so any server the IONOS API returned without them crashed the whole discovery process (no recover() in that path).</li>
+          <li>Replaced the struct literal with individual nil-guarded assignments, matching the pattern already used a few lines below for other optional fields.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jenkins OpenTelemetry Plugin" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Tee* classes leaked their secondary resource when the primary's close() threw</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jenkins OpenTelemetry Plugin</span><a href="https://github.com/jenkinsci/opentelemetry-plugin/pull/1298">PR</a><a href="https://github.com/jenkinsci/opentelemetry-plugin/issues/1297">Issue</a></div>
+        <ul>
+          <li>TeeBuildListener, TeeOutputStreamBuildListener, and TeeOutputStream tee a build's console log to both the OTel log sender and the local file-backed listener, closing the two delegates sequentially with no try/finally, if the OTel sender's close() failed on a network error, the local log file handle for that build was never closed.</li>
+          <li>Applied the close-both, propagate-first-suppress-second pattern a sibling class in the same package already used, across the other three Tee* classes.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jenkins OpenTelemetry Plugin" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">A single transient export failure permanently disabled all log export for the JVM's lifetime</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jenkins OpenTelemetry Plugin</span><a href="https://github.com/jenkinsci/opentelemetry-plugin/pull/1295">PR</a><a href="https://github.com/jenkinsci/opentelemetry-plugin/issues/1291">Issue</a></div>
+        <ul>
+          <li>OtelJulHandler's circuit breaker sets disabled = true on the first RuntimeException from its emit path and nothing ever cleared it, one OTLP endpoint blip permanently stopped all controller and pipeline log export until the next JVM restart, while traces kept flowing through a separate exporter and masked the outage.</li>
+          <li>Overrode afterConfiguration() to re-fetch the logger provider and clear the breaker on any SDK reconfiguration (e.g. a JCasC reload), and made the disabled field volatile since publish() runs on arbitrary logging threads.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jenkins Remoting" style="border-left:3px solid #d24939">
+        <div class="oss-item-head"><span class="oss-item-title">A test harness bug silently masked what two disabled ack tests were actually asserting</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jenkins Remoting</span><a href="https://github.com/jenkinsci/remoting/pull/1543">PR</a></div>
+        <ul>
+          <li>HoldFilterLayer's flush loops filled a temp buffer via ByteBufferQueue.get() but never flipped it before handing it to the next layer, so the receiver read uninitialised zero bytes instead of the real data, in ProtocolStackImplTest this made two ack-mismatch tests report a bogus "expected X got 0x000000" instead of the real mismatching bytes, which is why they'd been left @Disabled as flaky.</li>
+          <li>Flipped the buffer in both loops; the diagnostics now show the real bytes and both previously-disabled tests pass reliably across repeated runs.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Compile Instrumentation" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Instrumentation silently broke a tombstone type assertion controllers rely on</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go (Compile Instrumentation)</span><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/pull/1049">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/issues/1048">Issue</a></div>
+        <ul>
+          <li>The k8s client-go instrumentation's OnDelete wrapper unwrapped a cache.DeletedFinalStateUnknown tombstone to build span attributes, then forwarded the unwrapped value to the application's real handler instead of the original object, controllers commonly type-assert on that tombstone to distinguish an inferred delete from a confirmed one, and under instrumentation that assertion silently always failed.</li>
+          <li>Kept the unwrap local to attribute extraction and forwarded the original, possibly-wrapped object unchanged; added a test asserting the inner handler receives the tombstone, not the unwrapped object.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry C++ SDK" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Elasticsearch log exporter aborted the whole process on invalid UTF-8</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry C++ SDK</span><a href="https://github.com/open-telemetry/opentelemetry-cpp/pull/4501">PR</a><a href="https://github.com/open-telemetry/opentelemetry-cpp/issues/4439">Issue</a></div>
+        <ul>
+          <li>WriteValue stored a log record's body/attributes as given, and Export() dumped them via nlohmann::json with its default strict error handler, any non-UTF-8 byte (a truncated multibyte sequence, a differently-encoded payload) threw type_error.316 inside a noexcept function, turning std::terminate() into the actual failure mode for one bad log record.</li>
+          <li>Switched to error_handler_t::replace, which substitutes U+FFFD for the invalid bytes so the record and the rest of the bulk batch still export instead of crashing the process.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Compile Instrumentation" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Anthropic span created with an empty model name instead of skipping instrumentation</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go (Compile Instrumentation)</span><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/pull/1310">PR</a></div>
+        <ul>
+          <li>parseMessagesRequest returned an empty model on a request body it couldn't parse, truncated JSON past the 1MB cap, or a well-formed body that simply omits model, and the middleware still produced a span named "chat " (trailing space) with gen_ai.request.model empty, instead of the pass-through it already used for the other unparseable cases.</li>
+          <li>Added the same empty-model guard the OpenAI instrumentation already had (#866); picked up and finished a stalled community PR (#805) that had the right diagnosis but kept falling behind on bundle regeneration across rebases.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Collector Contrib" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">One vSAN entity with no perf data dropped every vCenter metric for the scrape</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Collector Contrib</span><a href="https://github.com/open-telemetry/opentelemetry-collector-contrib/pull/50618">PR</a></div>
+        <ul>
+          <li>convertVSANResultToMetricResults parsed each SampleInfo entry with strings.Split + time.Parse; an empty SampleInfo (a freshly provisioned cluster, or a temporarily unavailable vSAN perf service) produced one empty entry that failed to parse, and that single error propagated all the way up through scrapeComputes, dropping the entire scrape cycle's vCenter metrics rather than just that one entity.</li>
+          <li>Returns early with an empty result for an empty/whitespace-only SampleInfo so that one entity is skipped and the rest of the scrape proceeds normally.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="GoFr" style="border-left:3px solid #00adb5">
+        <div class="oss-item-head"><span class="oss-item-title">Plain HTTP request to a WebSocket route panicked instead of erroring</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">GoFr</span><a href="https://github.com/gofr-dev/gofr/pull/3932">PR</a><a href="https://github.com/gofr-dev/gofr/issues/3862">Issue</a></div>
+        <ul>
+          <li>App.WebSocket's handler asserted ctx.Request.Context().Value(websocket.WSConnectionKey).(string) unconditionally; a plain GET to that route (no Connection: Upgrade headers) never gets that context key set by the upgrade middleware, so the bare assertion panicked with a nil-interface conversion instead of returning an error.</li>
+          <li>GetWebsocketConnection also returned a nil *Connection for an unknown ID, so even a safe assertion would have hit a nil-pointer dereference right after, guarded both call sites and return the existing websocket.ErrorConnection instead.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jenkins OpenTelemetry Plugin" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">loggedIn() null-checked the wrong object and threw on every context missing an Authentication</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jenkins OpenTelemetry Plugin</span><a href="https://github.com/jenkinsci/opentelemetry-plugin/pull/1300">PR</a></div>
+        <ul>
+          <li>AuditingSecurityListener.loggedIn(String) null-checked SecurityContextHolder.getContext(), which per the Spring Security contract never returns null (an empty context is lazily created), the value that actually can be null, securityContext.getAuthentication(), was dereferenced unconditionally right after, throwing an NPE whenever SecurityListener.fireLoggedIn(...) ran before the current thread's security context was populated.</li>
+          <li>Moved the null check to the value that can actually be null, matching what the Spring Security contract actually guarantees rather than the assumption the original code made.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="oss-category" data-cat="concurrency">
+      <h3 class="oss-category-title">Concurrency &amp; Thread Safety</h3>
+      <p class="oss-category-summary">Bugs that only exist because state, or a resource's ownership, is shared without a clear boundary. The fix is almost never a lock, it's redrawing where that boundary is.</p>
+
+      <div class="oss-item" data-repo="GoFr" style="border-left:3px solid #00adb5">
+        <div class="oss-item-head"><span class="oss-item-title">Parent goroutine read a context field the handler goroutine was reassigning</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">GoFr</span><a href="https://github.com/gofr-dev/gofr/pull/4111">PR</a></div>
+        <ul>
+          <li>serveWithGoroutine's select read c.Context.Done() on the parent goroutine while the spawned handler goroutine reassigned c.Context via WithValue in App.WebSocket, a data race on one shared field.</li>
+          <li>Snapshotted the context to watch into a local variable before spawning the handler goroutine, so the parent never reads the shared field again after that point.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry C++ SDK" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Logger emit could static_cast a no-op record into a real one</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry C++ SDK</span><a href="https://github.com/open-telemetry/opentelemetry-cpp/pull/4624">PR</a><a href="https://github.com/open-telemetry/opentelemetry-cpp/issues/4537">Issue</a></div>
+        <ul>
+          <li>A record created while the logger was disabled was a no-op record, but enabling the logger before emit let it reach two unconditional static_casts, which is undefined behavior. The issue's dynamic_cast fix doesn't build under the project's no-RTTI CI job.</li>
+          <li>CreateLogRecord now returns an empty MultiRecordable while disabled, which is a real Recordable, so both casts are always safe and the record is dropped without reaching a processor.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Go Contrib" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Non-deterministic trace/span IDs from a discarded seed-read error</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go Contrib (xray)</span><a href="https://github.com/open-telemetry/opentelemetry-go-contrib/pull/9359">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go-contrib/issues/9048">Issue</a></div>
+        <ul>
+          <li>A silently-discarded crypto/rand seed-read error could make the X-Ray IDGenerator emit identical trace/span IDs across instances whenever entropy wasn't available.</li>
+          <li>Replaced the manually-seeded generator with math/rand/v2's runtime-seeded globals, while preserving the stable v1 module's public API per reviewer feedback.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Liquibase" style="border-left:3px solid #2f8fff">
+        <div class="oss-item-head"><span class="oss-item-title">MDC log entries torn down across inherited thread scopes</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Liquibase</span><a href="https://github.com/liquibase/liquibase/pull/7825">PR</a><a href="https://github.com/liquibase/liquibase/issues/7823">Issue</a></div>
+        <ul>
+          <li>A child thread inheriting a parent's Scope (via InheritableThreadLocal) could have its MDC entries wiped out by the parent's exit(), since entries were tracked in one static map keyed only by scope ID.</li>
+          <li>Re-scoped ownership to a ThreadLocal&lt;Map&lt;...&gt;&gt;, so each thread only ever cleans up entries it registered itself, eliminating the race by construction rather than adding locking.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="HAMi" style="border-left:3px solid #4ade80">
+        <div class="oss-item-head"><span class="oss-item-title">Shared-memory device limits read and written with plain assignments, not atomics</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">HAMi</span><a href="https://github.com/Project-HAMi/HAMi/pull/2179">PR</a><a href="https://github.com/Project-HAMi/HAMi/issues/2127">Issue</a></div>
+        <ul>
+          <li>HAMi-core marks the GPU device-limit fields in its shared memory region _Atomic on the C side, but the Go side's monitor package read and wrote the same words (memory limit, SM limit, recent-kernel, utilization-switch) with plain assignments, a live caller reading DeviceMemoryLimit could observe a torn or stale value during concurrent updates.</li>
+          <li>Switched every accessor to sync/atomic Load/Store on the Go side to match the C side's contract, with no change to the shared struct's layout or wire format; verified the existing test suite still passes under -race.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jenkins Remoting" style="border-left:3px solid #d24939">
+        <div class="oss-item-head"><span class="oss-item-title">Lock-order inversion deadlock between Channel.terminate() and ProxyOutputStream</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jenkins Remoting</span><a href="https://github.com/jenkinsci/remoting/pull/1542">PR</a><a href="https://github.com/jenkinsci/remoting/issues/1449">Issue</a></div>
+        <ul>
+          <li>ProxyOutputStream's synchronized methods call Channel.send(), itself synchronized on the Channel, acquiring the stream monitor then the Channel monitor. Channel.terminate() held the Channel monitor across ExportTable.abort(), which acquires each stream's monitor in turn, the opposite lock order, deadlocking a concurrent stream write against channel termination.</li>
+          <li>Moved the abort() call out of the synchronized block, matching how an earlier fix already moved the listener notification for the same reason, and added a test that deterministically reproduces the exact interleaving via ThreadMXBean.findDeadlockedThreads().</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jenkins Remoting" style="border-left:3px solid #d24939">
+        <div class="oss-item-head"><span class="oss-item-title">A write racing channel close could see stale free space and null-pointer on a released write handle</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jenkins Remoting</span><a href="https://github.com/jenkinsci/remoting/pull/1539">PR</a><a href="https://github.com/jenkinsci/remoting/issues/1176">Issue</a></div>
+        <ul>
+          <li>FifoBuffer.writable() computed Math.max(0, limit - readable()), but readable() returns -1 as a closed-and-empty sentinel rather than an actual count, subtracting it produced limit + 1 instead of 0 exactly when the buffer was closed with nothing left to read.</li>
+          <li>That wasn't just a cosmetic accounting bug: releaseRing() nulls the write pointer under the same readable() &lt; 0 condition, so a write() racing right as the buffer closed could see a positive writable(), skip its closeRequested retry check, and call write() on an already-null pointer.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jenkins Remoting" style="border-left:3px solid #d24939">
+        <div class="oss-item-head"><span class="oss-item-title">closeRequested and closeRequestCause read across threads without a happens-before edge</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jenkins Remoting</span><a href="https://github.com/jenkinsci/remoting/pull/1545">PR</a></div>
+        <ul>
+          <li>Channel.close() and terminate() assign closeRequested/closeRequestCause before entering the synchronized block, but other threads read them without the monitor via isClosingOrClosed() and getCloseRequestCause(), as plain fields, a reader had no guarantee of ever observing the write.</li>
+          <li>Made both fields volatile, matching inClosed/outClosed which were already volatile for the exact same read pattern in the same methods.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jenkins OpenTelemetry Plugin" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Unbounded RPC wait in preOnline() could stall an agent's whole online handshake</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jenkins OpenTelemetry Plugin</span><a href="https://github.com/jenkinsci/opentelemetry-plugin/pull/1294">PR</a><a href="https://github.com/jenkinsci/opentelemetry-plugin/issues/1285">Issue</a></div>
+        <ul>
+          <li>preOnline() waited on the agent's OpenTelemetry configuration RPC with an unbounded Future.get(), while the sibling afterConfiguration() already bounded the same kind of call to 10 seconds, since preOnline() runs synchronously inside SlaveComputer.setChannel(), an unbounded wait gave a NAT idle timeout or network blip a much bigger window to close the channel before the handshake finished, mostly hitting agents on higher-RTT links.</li>
+          <li>Bounded the wait to a configurable timeout (default 10s, matching afterConfiguration()), logging a warning and letting the agent online anyway instead of blocking indefinitely when it elapses.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Liquibase" style="border-left:3px solid #2f8fff">
+        <div class="oss-item-head"><span class="oss-item-title">Changelog lock released by a command that never acquired it</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Liquibase</span><a href="https://github.com/liquibase/liquibase/pull/7886">PR</a><a href="https://github.com/liquibase/liquibase/issues/5438">Issue</a></div>
+        <ul>
+          <li>AbstractUpdateCommandStep conflated "a lock exists" with "this method acquired the lock": commands like updateCount rely on the pipeline's LockServiceCommandStep to lock, but run() still tried to release it in its finally block, producing a spurious second release attempt.</li>
+          <li>Added a flag tracking whether run() itself acquired the lock, so only the actual owner releases it; a regression test fails on the previous implementation and passes with the fix.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jenkins Remoting" style="border-left:3px solid #d24939">
+        <div class="oss-item-head"><span class="oss-item-title">Non-user RPC requests bypassed the close-in-progress guard and blocked on the monitor close() held</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jenkins Remoting</span><a href="https://github.com/jenkinsci/remoting/pull/1544">PR</a></div>
+        <ul>
+          <li>Channel.close() sets closeRequested up front and then holds the Channel monitor for the rest of teardown, while outClosed stays null until later, during that window, checkIfCanBeExecutedOnChannel() is the guard meant to refuse new requests, but it was only overridden on UserRequest and RemoteInvocationHandler.UserRPCRequest (identical copy-pasted bodies); the base Request.checkIfCanBeExecutedOnChannel() only checks getSenderCloseCause() (outClosed).</li>
+          <li>So a base RPCRequest, a ProxyInputStream.Chunk, or any other non-user Request sent in that window passed the check and then blocked on the monitor close()/terminate() was already holding, instead of failing fast, moved the guard onto the base Request class so every request type is refused consistently once close is requested.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="oss-category" data-cat="test-coverage">
+      <h3 class="oss-category-title">Test Coverage &amp; Feature Extension</h3>
+      <p class="oss-category-summary">Filling gaps rather than fixing bugs: missing test coverage, triplicated code that should be one shared implementation, or a new capability built to match an established pattern already used elsewhere in the codebase.</p>
+
+      <div class="oss-item" data-repo="Jaeger" style="border-left:3px solid #60d0e4">
+        <div class="oss-item-head"><span class="oss-item-title">Extended the span-search conformance battery to cover scope, link, and status fields</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jaeger</span><a href="https://github.com/jaegertracing/jaeger/pull/9733">PR</a></div>
+        <ul>
+          <li>Split out of a ClickHouse-specific PR as the backend-neutral half of its diff. Added fixtures and filter test cases for scope attributes, link attributes, span status, trace state, and duration, plus a refusal case for a field the backend doesn't index.</li>
+          <li>Moved the corpus scope from an IN predicate to a disjunction of equality checks, so a backend that evaluates OR but not IN can still run the battery, and made the direct test suite resolve filters the same way the query service does in production.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Prometheus" style="border-left:3px solid #e6522c">
+        <div class="oss-item-head"><span class="oss-item-title">Documented and tested NaN behavior for clamp_min and clamp_max</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Prometheus</span><a href="https://github.com/prometheus/prometheus/pull/19274">PR</a></div>
+        <ul>
+          <li>clamp() documents that float samples return NaN when either bound is NaN, and clamp_min and clamp_max share that helper, but neither documented it and only clamp() had tests for it.</li>
+          <li>Added the special case to both function docs and the two missing test cases, with no functional change.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jaeger" style="border-left:3px solid #60d0e4">
+        <div class="oss-item-head"><span class="oss-item-title">Added the api_v3 FindSpans endpoint and GET /api/v3/spans route</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jaeger</span><a href="https://github.com/jaegertracing/jaeger/pull/9613">PR</a></div>
+        <ul>
+          <li>Completes the second milestone of RFC 0016 by exposing the internal FindSpans plumbing through the api_v3 gRPC handler and a GET route, modeled on the existing trace summary endpoints.</li>
+          <li>Query parsing requires a time range, and the response is an envelope rather than bare trace data.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jaeger" style="border-left:3px solid #60d0e4">
+        <div class="oss-item-head"><span class="oss-item-title">FindSpans on the memory backend, with a filter evaluator written from scratch</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jaeger</span><a href="https://github.com/jaegertracing/jaeger/pull/9611">PR</a></div>
+        <ul>
+          <li>Span search (RFC 0016) needs a backend that returns exactly the matching spans rather than whole traces. No backend had a filter evaluator to reuse, so wrote one that evaluates the full RFC 0005 filter AST over every span in the store.</li>
+          <li>Implements all 14 filter operators at every nesting level, making the memory backend the first reader to declare span search support.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jaeger" style="border-left:3px solid #60d0e4">
+        <div class="oss-item-head"><span class="oss-item-title">Wired RFC 0014 pagination admission into the request path</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jaeger</span><a href="https://github.com/jaegertracing/jaeger/pull/9450">PR</a></div>
+        <ul>
+          <li>The request-side slice of RFC 0014's second milestone, stacked on the contract PR. Leaves the Reader's return types unchanged, so existing callers are unaffected.</li>
+          <li>Replaces the duplicated per-handler pagination decoding with a shared helper.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jaeger" style="border-left:3px solid #60d0e4">
+        <div class="oss-item-head"><span class="oss-item-title">Pagination contract for the tracestore reader (RFC 0014)</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jaeger</span><a href="https://github.com/jaegertracing/jaeger/pull/9570">PR</a></div>
+        <ul>
+          <li>Added the Pagination type, a Paginated search capability, and the admission checks both wire layers will call, so pagination requests are validated the same way everywhere.</li>
+          <li>Carved out of a larger wiring PR to keep reviews manageable. No caller sets Pagination yet, so it changes no runtime behavior.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Compile Instrumentation" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">De-duplicated the OpenAI streaming reader across three SDK versions</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go (Compile Instrumentation)</span><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/pull/990">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/issues/958">Issue</a></div>
+        <ul>
+          <li>streamingReader and its helpers were triplicated verbatim across the v1, v2, and v3 openai-go instrumentation packages, despite none of the three actually depending on the versioned SDK.</li>
+          <li>Extracted the shared logic into its own internal module that all three require and locally replace, keeping only a ~30-line adapter bridge per version; avoided a module dependency cycle by giving the shared package its own small attribute-key set instead of importing any version's semconv package.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Apicurio Registry" style="border-left:3px solid #6e56cf">
+        <div class="oss-item-head"><span class="oss-item-title">Missing integration test coverage for contract events</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Apicurio Registry</span><a href="https://github.com/Apicurio/apicurio-registry/pull/8860">PR</a><a href="https://github.com/Apicurio/apicurio-registry/issues/8858">Issue</a></div>
+        <ul>
+          <li>The contract subsystem's events (ruleset configured, metadata updated, status changed) had no integration coverage in RegistryEventsTest.</li>
+          <li>Added tests that exercise the REST API, wait for the event on the Kafka outbox topic, and validate the emitted payload against the operation performed.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="GoFr" style="border-left:3px solid #00adb5">
+        <div class="oss-item-head"><span class="oss-item-title">ScyllaDB migration support</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">GoFr</span><a href="https://github.com/gofr-dev/gofr/pull/2085">PR</a></div>
+        <ul>
+          <li>GoFr's migration framework had no ScyllaDB support, so distributed NoSQL schema migrations couldn't be version-tracked like the framework's relational backends.</li>
+          <li>Added the migrator plus a gomock-based test harness for deterministic testing without a live cluster.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Argo CD" style="border-left:3px solid #ef7b4d">
+        <div class="oss-item-head"><span class="oss-item-title">ApplicationSet controller retries were stuck on a ~16-minute backoff with no way to tune it</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Argo CD</span><a href="https://github.com/argoproj/argo-cd/pull/28286">PR</a><a href="https://github.com/argoproj/argo-cd/issues/28010">Issue</a></div>
+        <ul>
+          <li>argocd-applicationset-controller used the controller-runtime default workqueue rate limiter (5ms base, ~16m40s cap) with no exposed way to change it, so after a few consecutive reconcile failures an ApplicationSet could only be retried every ~16 minutes, very slow recovery from a transient SCM or ephemeral cluster error.</li>
+          <li>Exposed the same workqueue tuning flags argocd-application-controller already has, and aligned the default max delay to 1s to match it, instead of inheriting controller-runtime's much larger default.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jaeger IDL" style="border-left:3px solid #60d0e4">
+        <div class="oss-item-head"><span class="oss-item-title">Laid the proto foundation for Jaeger's search-result pagination RFC</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jaeger IDL</span><a href="https://github.com/jaegertracing/jaeger-idl/pull/213">PR</a></div>
+        <ul>
+          <li>M1 of RFC 0014's implementation roadmap: additive-only proto fields for search-result pagination, a new Pagination message (page_size, page_token), TraceQueryParameters.pagination, and FindTraceSummariesResponse.next_page_token, following on from an earlier pagination RFC that was closed in favor of 0014.</li>
+          <li>Duplicated the same Pagination message shape into storage/v2/trace_storage.proto per the RFC's own spec, since jaeger.storage.v2 doesn't import jaeger.api_v3 and the two proto packages can't share the message directly.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="GoFr" style="border-left:3px solid #00adb5">
+        <div class="oss-item-head"><span class="oss-item-title">Descoped a metrics PR down to the one counter that wasn't already redundant</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">GoFr</span><a href="https://github.com/gofr-dev/gofr/pull/3856">PR</a><a href="https://github.com/gofr-dev/gofr/issues/629">Issue</a></div>
+        <ul>
+          <li>Added app_circuit_open_count, incremented once per real Closed-to-Open circuit-breaker transition rather than once per failing request that merely observes an already-open breaker.</li>
+          <li>Dropped the other two items in the original scope after review: app_server_error duplicated app_http_response_count{status=~"5.."}'s exact label set (the equivalent query already worked with zero code changes), and a package-level metrics accessor shipped with no callers anywhere in the tree while the existing constructor-based DI was untouched, kept the PR to what the issue actually needed.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="personal-projects">
+    <h2><span class="n">03</span> Personal Projects</h2>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">MetaLens</span>
+        <span class="project-type">| Metadata Store Viewer</span>
+      </div>
+      <div class="project-stack">Node.js, Express.js, TypeScript, FastAPI, PostgreSQL, Prisma, DuckDB, Apache Arrow, React, Vite, Docker, AWS S3</div>
+      <div class="project-meta">
+        <span><a href="https://github.com/WeDontTestAnymore/MonoRepo">GitHub</a></span>
+        <span>Mar 2025</span>
+      </div>
+      <ul>
+        <li>Designed a distributed metadata exploration solution enabling schema exploration and analytics across 4+ lakehouse formats (Hudi, Iceberg, Delta, Parquet) directly from S3-compatible object stores, with no dependency on external catalog systems.</li>
+        <li>Orchestrated a microservices-based solution using Node.js and FastAPI to provide parallel data services for efficient processing of 100+ GB of data.</li>
+        <li>Optimized metadata querying with DuckDB and Apache Arrow, achieving a 60% reduction in scanning data.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">InsightGuard</span>
+        <span class="project-type">| APT Detection Framework</span>
+      </div>
+      <div class="project-stack">Elastic Stack (Elasticsearch, Logstash, Kibana), Sysmon, Winlogbeat, Packetbeat, Python, PowerShell, Docker, PPO (Reinforcement Learning), SHAP</div>
+      <div class="project-meta">
+        <span><a href="https://github.com/SIH-2k25-ReLU-or-Not-to-ReLU/monorepo.git">GitHub</a></span>
+        <span>Dec 2025</span>
+      </div>
+      <ul>
+        <li>Engineered a real-time APT detection framework leveraging ELK Stack and host/network telemetry (Sysmon, Winlogbeat, Packetbeat), delivering end-to-end visibility across the attack lifecycle with 19+ production-grade detection rules.</li>
+        <li>Designed a multi-stage attack simulation engine replicating APT36 tactics mapped to MITRE ATT&amp;CK, enabling controlled validation of detection pipelines and improved threat coverage across persistence, privilege escalation, and exfiltration scenarios.</li>
+        <li>Developed an ML-driven anomaly detection system using a PPO-based reinforcement learning agent with SHAP explainability for adaptive detection of C2 traffic patterns, reducing false positives.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">Smart Vehicle Sequencing</span>
+        <span class="project-type">| Buffer Optimization System</span>
+      </div>
+      <div class="project-stack">React, TypeScript, FastAPI, SimPy, Google OR-Tools (CP-SAT), MILP, Tailwind CSS</div>
+      <div class="project-meta">
+        <span><a href="https://github.com/om7057/Mindspark-Hackathon-25_We_Don-t_Test_Anymore.git">GitHub</a></span>
+        <span>Oct 2025</span>
+      </div>
+      <ul>
+        <li>Engineered a real-time vehicle routing and sequencing system for paint shop operations, optimizing flow across 9 buffer lines from dual input sources via a multi-strategy scoring algorithm to minimize color changeovers and prevent buffer overflow.</li>
+        <li>Designed and integrated a constraint optimization pipeline using Google OR-Tools (CP-SAT, MILP), enabling optimal drain-mode sequencing and reducing paint changeover frequency through color-aware scheduling.</li>
+        <li>Developed a discrete-event simulation framework using SimPy with configurable arrival rates and dynamic routing rules, improving system throughput via adaptive buffer management and real-time decisioning.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">Safe Space</span>
+        <span class="project-type">| Safety Learning Platform</span>
+      </div>
+      <div class="project-stack">Node.js, Express, PostgreSQL, Redis, React, React Native (Expo), FastAPI, Google Gemini AI, face-api.js, Docker</div>
+      <div class="project-meta">
+        <span><a href="https://github.com/om7057/SafeSpace">GitHub</a></span>
+        <span>Mar 2026</span>
+      </div>
+      <ul>
+        <li>Architected and deployed a full-stack, multi-platform safety learning system supporting 5,000+ concurrent users across web (React) and mobile (React Native), with 39+ relational models and 100+ RESTful endpoints secured by JWT/OAuth and role-based access control, achieving 99.9% service uptime.</li>
+        <li>Engineered an AI-driven content generation pipeline using Google Gemini AI, transforming 50+ real-time news inputs into age-adaptive interactive narratives, with face-api.js-based emotion detection enabling affective feedback and personalized learning.</li>
+        <li>Led end-to-end development of a scalable microservices architecture with FastAPI-based data ingestion, real-time caching via Redis, and Dockerized deployment, reducing content generation latency by ~85% and keeping frontend load times under 2s.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">GraphMind</span>
+        <span class="project-type">| Financial Memory Assistant</span>
+      </div>
+      <div class="project-stack">React, TypeScript, FastAPI, PostgreSQL, Neo4j, Milvus, Google Gemini API, AWS S3, Docker, PaddleOCR</div>
+      <div class="project-meta">
+        <span><a href="https://github.com/om7057/GraphMind.git">GitHub</a></span>
+        <span>Mar 2026</span>
+      </div>
+      <ul>
+        <li>Architected a multi-tenant AI memory system with strict user isolation via JWT authentication and dual persistence (PostgreSQL + Neo4j), ingesting conversational data into structured knowledge graphs with automated entity extraction and relationship mapping, ensuring 99.9% data isolation compliance.</li>
+        <li>Engineered a hybrid retrieval pipeline combining graph traversal (Neo4j Cypher) and vector search (Milvus ANN) with adaptive query strategies and RRF-based ranking, achieving ~45ms average retrieval latency with context-aware multi-signal scoring.</li>
+        <li>Developed a production-grade document ingestion and reasoning pipeline supporting multi-format inputs (PDF, images, text) with OCR (PaddleOCR) and LLM-based extraction, enabling fact deduplication, contradiction detection, and citation-aware responses with audit trails.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">OCDetect</span>
+        <span class="project-type">| OCD Assessment Platform</span>
+      </div>
+      <div class="project-stack">Next.js, React, Node.js, Express, Flask, MongoDB, Firebase, MediaPipe, scikit-learn, Tailwind CSS</div>
+      <div class="project-meta">
+        <span><a href="https://github.com/OSM-miniproject/OCDetect">GitHub</a></span>
+        <span>Nov 2024</span>
+      </div>
+      <ul>
+        <li>Engineered a full-stack ML-powered diagnostic platform with 20+ interactive assessment modules, processing 50+ behavioral and questionnaire-based metrics to generate real-time OCD severity scores using scikit-learn classification and regression models.</li>
+        <li>Developed a real-time computer vision pipeline using MediaPipe and OpenCV via a Flask microservice, capturing 100+ temporal behavioral signals (posture, blink patterns) per session to improve prediction accuracy through multimodal analysis.</li>
+        <li>Designed a scalable backend and authentication system using Firebase and MongoDB, supporting persistent user profiles, session tracking, and secure access across 6+ protected routes, with a responsive UI and data visualization dashboards.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">Coldchain Optimization</span>
+        <span class="project-type">| Logistics Matching Engine</span>
+      </div>
+      <div class="project-stack">Go, React, TypeScript, React Native, Python (Flask), PostgreSQL, PostGIS, Docker, Node.js</div>
+      <div class="project-meta">
+        <span><a href="https://github.com/coldchain-optimization/monorepo.git">GitHub</a></span>
+        <span>Mar 2026</span>
+      </div>
+      <ul>
+        <li>Engineered a real-time cold-chain logistics matching engine using a multi-factor scoring algorithm (route overlap, temperature compatibility, capacity, time window, distance deviation) to rank transporter options with confidence scores for optimal shipper-transporter pairing without prior route visibility.</li>
+        <li>Designed a distributed request aggregation and workflow system modeling shipper and transporter interactions, supporting multi-parameter matching with eventual consistency across actors and dynamic acceptance/rejection decision tracking.</li>
+        <li>Developed an end-to-end tracking and pricing system with geospatial analytics (PostGIS), real-time ETA updates, and cost computation models, delivering interactive shipment visibility across web and mobile via containerized microservices and JWT-secured multi-role access.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">CounsConnect</span>
+        <span class="project-type">| Counsellor-Management Platform</span>
+      </div>
+      <div class="project-stack">Go (Gin), Node.js (Express), MongoDB, Firebase, React, React Native (Expo), TypeScript, JWT, Docker</div>
+      <div class="project-meta">
+        <span><a href="https://github.com/OSM-miniproject/CounsConnect">GitHub</a></span>
+        <span>May 2025</span>
+      </div>
+      <ul>
+        <li>Architected a multi-platform counseling platform across web and mobile using a microservices architecture (Go + Node.js), reducing API latency by ~40% through optimized concurrency and event-driven service design.</li>
+        <li>Engineered a real-time communication and task management system using Firebase and MongoDB, supporting 500+ concurrent users with sub-100ms message delivery and RBAC-based authorization across multi-role workflows (Admin, Counselor, Patient).</li>
+        <li>Designed a secure authentication and data access layer with JWT, bcrypt hashing, and role-based query controls, ensuring data integrity and protection against common web vulnerabilities at scale.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">Gen AI Exchange</span>
+        <span class="project-type">| Artist Marketplace</span>
+      </div>
+      <div class="project-stack">Next.js, React, TypeScript, Express.js, FastAPI, PostgreSQL, Prisma, Redis, Docker, Cloudinary, BullMQ, JWT</div>
+      <div class="project-meta">
+        <span><a href="https://github.com/Gen-AI-Exchange-Hackathon-WCE/9GenAI-Exchange">GitHub</a></span>
+        <span>Sep 2025</span>
+      </div>
+      <ul>
+        <li>Architected a full-stack AI-powered marketplace using a microservices-based monorepo (Next.js, Express.js, FastAPI), supporting multi-role workflows (Customer, Artist, Investor, Admin) with JWT authentication and 50+ relational data models for digital asset commerce.</li>
+        <li>Optimized platform performance using Redis caching, Cloudinary CDN, and BullMQ-based asynchronous processing, reducing API latency by ~40% and supporting 1000+ concurrent user requests and background ML-driven workflows.</li>
+        <li>Developed end-to-end e-commerce and discovery features including AI-assisted artist profiling, product search, order management, and course delivery, with robust validation (Zod, React Hook Form) achieving 99%+ input accuracy.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">MetaQuery</span>
+        <span class="project-type">| Query Workspace Manager</span>
+      </div>
+      <div class="project-stack">Spring Boot, Java, PostgreSQL, Spring Security, JWT, JPA, Maven</div>
+      <div class="project-meta">
+        <span><a href="https://github.com/om7057/Query-Engine">GitHub</a></span>
+        <span>Aug 2025</span>
+      </div>
+      <ul>
+        <li>Architected a multi-tenant query management backend using Spring Boot, implementing JWT-based stateless authentication and role-based access control across 6+ RESTful endpoints, supporting 500+ daily transactions with secure session handling.</li>
+        <li>Designed a scalable 3-tier architecture (Controller&ndash;Service&ndash;Repository) with dynamic query lifecycle management, enabling SQL dialect support across multiple databases (PostgreSQL, MySQL, Oracle) and reducing query validation time by ~40%.</li>
+        <li>Engineered a secure workspace isolation model using Spring Security and JPA, enabling multi-user collaboration with controlled access and feedback-driven query evaluation, ensuring data integrity across concurrent sessions.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">Swasthya</span>
+        <span class="project-type">| Healthcare Intelligence Platform</span>
+      </div>
+      <div class="project-stack">React, React Native (Expo), TypeScript, Express.js, FastAPI, PostgreSQL, Prisma, scikit-learn, Twilio API, Docker</div>
+      <div class="project-meta">
+        <span><a href="https://github.com/om7057/Swasthya">GitHub</a></span>
+        <span>Mar 2025</span>
+      </div>
+      <ul>
+        <li>Architected a full-stack healthcare platform with 7 microservices supporting multi-role workflows (Patient, Lab Head, Lab Assistant, Doctor), automating appointment scheduling and reducing booking time to under 2 minutes through event-driven workflows.</li>
+        <li>Engineered real-time communication infrastructure using the Twilio WhatsApp API and asynchronous processing pipelines, enabling bi-directional notifications with sub-second latency at high message volume.</li>
+        <li>Developed an ML-powered medical intelligence layer integrating NLP-based intent classification and OCR-driven report analysis, automating patient query routing and structured data extraction from 100+ lab report formats.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">PRISM AI</span>
+        <span class="project-type">| Agentic Collaboration System</span>
+      </div>
+      <div class="project-stack">Python, FastAPI, Neo4j, IBM watsonx (watsonx.ai, watsonx Orchestrate), Docker, Temporal Logic (LTL), Event Streams</div>
+      <div class="project-meta">
+        <span class="muted">GitHub pending</span>
+        <span>2025</span>
+      </div>
+      <ul>
+        <li>Architected an agentic AI system integrating enterprise event streams (Slack, Jira, CI/CD, Confluence) into a unified temporal knowledge graph, enabling context-aware reasoning and eliminating fragmented decision tracking across distributed teams.</li>
+        <li>Designed and implemented automata-based monitoring (LTL/Büchi automata) to detect workflow violations and inefficiencies in real time, triggering intelligent agents for lifecycle tracking, duplicate work detection, workload balancing, and knowledge transfer.</li>
+        <li>Engineered a hybrid reasoning pipeline using IBM watsonx (LLMs + Orchestrate) to transform raw event signals into explainable insights and automated actions, reducing duplicate effort and improving organizational efficiency.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">omkulkarni.me</span>
+        <span class="project-type">| Personal Portfolio</span>
+      </div>
+      <div class="project-stack">Next.js, React, TypeScript, Tailwind CSS</div>
+      <div class="project-meta">
+        <span><a href="https://github.com/om7057">GitHub</a></span>
+      </div>
+      <ul>
+        <li>Personal portfolio site, including an open-source contributions explorer that groups merged upstream PRs by problem category (silent failures, concurrency, cardinality, spec drift) rather than by repo.</li>
+        <li>Kept in sync with the <code>om7057</code> GitHub profile README as one coherent record of OSS work, writing, and achievements.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="achievements">
+    <h2><span class="n">04</span> Personal Achievements / Milestones</h2>
+    <p class="sub" style="margin-bottom:16px">Pulled directly from the portfolio's Academic and Competitive Milestones timeline, same order top to bottom.</p>
+
+    <div class="project">
+      <div class="project-head"><span class="project-title">OpenTelemetry Governing Committee Election</span></div>
+      <div class="project-meta"><span>2026</span></div>
+      <p class="muted">Invited voter</p>
+      <p>Invited to vote in the OpenTelemetry Governing Committee general election, an eligibility threshold reserved for community members with 20+ merged pull requests across the project.</p>
+    </div>
+
+    <div class="project">
+      <div class="project-head"><span class="project-title">Achieved Global Top 50 Rank, IBM watsonx TechXchange Hackathon</span></div>
+      <div class="project-meta"><span>2025</span></div>
+      <p class="muted">Core Backend and Systems Engineer, Team: We Don't Test Anymore (Walchand College of Engineering)</p>
+      <p>Recognized among the Global Top 50 teams worldwide for building PRISM AI, an agentic collaboration system that unifies enterprise event streams (Slack, Jira, CI/CD, and more) into a temporal knowledge graph to eliminate duplicate work, improve workload distribution, and preserve decision context. Leveraged IBM watsonx (LLMs plus Orchestrate) to enable explainable, autonomous agents that detect workflow inefficiencies and trigger actionable interventions across enterprise systems.</p>
+      <ul>
+        <li>Top 50 globally (IBM selection)</li>
+        <li>Invited to IBM TechXchange 2025 (Florida)</li>
+        <li>Competed against global teams across multiple countries</li>
+        <li>Recognized for high-impact AI system design and enterprise applicability</li>
+      </ul>
+      <div class="project-meta">
+        <span><a href="https://drive.google.com/file/d/1kwDztb1YSZHJ0wMdRVf7azDW66jsCDdw/view?usp=drive_link">Conference Invitation</a></span>
+        <span><a href="https://drive.google.com/file/d/1aO6jVkOsyvDwXIPyszLcsr_SIRkkcGTW/view?usp=drive_link">Top 50 Certificate</a></span>
+        <span><a href="https://www.linkedin.com/posts/om7057_ibm-watsonx-techxchange2025-activity-7384318277608439808-z9y6">LinkedIn Post</a></span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head"><span class="project-title">1st Place, COEP Inspiron 4.0 (National Hackathon)</span></div>
+      <div class="project-meta"><span>2025</span></div>
+      <p class="muted">Backend and Data Systems Engineer, Team: We Don't Test Anymore</p>
+      <p>Secured 1st place in a 36-hour national-level hackathon at COEP by solving a complex data engineering challenge: building a metastore viewer for Iceberg, Delta, Hudi, and Parquet directly from S3-compatible object storage without depending on Hive or Glue. Built a fully containerized microservices system to parse raw lakehouse table formats, reconstruct metadata, and deliver a unified interface for schema and table insights. Focused on deep file-level parsing and metadata reconstruction to enable real-time exploration across distributed data formats.</p>
+      <ul>
+        <li>Achieved 1st rank among national participants at COEP Inspiron 4.0</li>
+        <li>Built a format-specific microservices architecture for Hudi, Iceberg, Delta, and Parquet</li>
+        <li>Implemented direct S3 parsing without external catalog dependencies (Hive or Glue)</li>
+        <li>Engineered a Dockerized, extensible system for unified metadata querying</li>
+      </ul>
+      <div class="project-meta">
+        <span><a href="https://drive.google.com/file/d/114Z1ETq4yVJb5igdnUCtCHChbFe8skGS/view?usp=sharing">COEP Inspiron'25</a></span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head"><span class="project-title">Winner, Walchand Imagine Cup (National Startup Pitch Competition)</span></div>
+      <div class="project-meta"><span>2026</span></div>
+      <p class="muted">Core Backend and Product Systems Contributor, Team: IOTAS</p>
+      <p>Secured 1st place in Walchand Imagine Cup, a national-level startup pitching competition, by building and pitching an EdTech product against 200+ teams across India. Advanced through multiple competitive stages including a Top 15 shortlist and Top 5 roundtable pitching, where we presented to industry experts and competed against strong teams including early-stage startups. Demonstrated both technical depth and product thinking by translating a production-capable system into a compelling, real-world business solution.</p>
+      <ul>
+        <li>Winner among 200+ teams nationwide in a startup-style product competition</li>
+        <li>Qualified for Top 5 roundtable pitching before industry experts and judges</li>
+        <li>Competed against established startup teams with strong product-market fit</li>
+        <li>Built and pitched a scalable EdTech solution with technical depth and practical usability</li>
+      </ul>
+      <div class="project-meta">
+        <span><a href="https://drive.google.com/file/d/1f_YBJKXsHPIbJEmgwmnfHzkdKnw1bCs_/view?usp=drive_link">Walchand Imagine Cup</a></span>
+        <span><a href="https://www.linkedin.com/posts/om7057_teamiota-vision2026-wce-activity-7442767707818692608-smA4">LinkedIn Post</a></span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head"><span class="project-title">Winner, Ideathon 2025 (Vision 2K25 National Symposium)</span></div>
+      <div class="project-meta"><span>2025</span></div>
+      <p class="muted">Core Contributor, Product and System Design, Team: NPCs (Non-Playable Characters)</p>
+      <p>Secured 1st place at Ideathon 2025, a national-level innovation competition under Vision 2K25, by presenting a high-impact idea evaluated across multiple rigorous stages. Advanced through the idea shortlisting round and delivered a strong final presentation, successfully defending feasibility, scalability, and real-world impact before a panel of expert judges. Competed against teams with ready prototypes, demonstrating strong conceptual clarity, structured thinking, and the ability to translate ideas into viable solutions.</p>
+      <ul>
+        <li>1st rank among national participants in a highly competitive ideation challenge</li>
+        <li>Cleared multi-stage evaluation from shortlisting to final presentation and Q&amp;A</li>
+        <li>Defended feasibility, innovation, and impact before expert judges</li>
+        <li>Outperformed teams with working prototypes through strong product thinking and articulation</li>
+      </ul>
+      <div class="project-meta">
+        <span><a href="https://drive.google.com/file/d/1uWvfuFvDLgojS28-rwNtv9HbY0X7EzI2/view?usp=drive_link">Ideathon 2025 (Vision 2K25)</a></span>
+        <span><a href="https://www.linkedin.com/posts/anshulp007_ideathon2025-vision2k25-1strank-ugcPost-7307840164960104448-NtmK">LinkedIn Post</a></span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head"><span class="project-title">MetaLens, IEEE ICFT 2025 Research Publication and Presentation</span></div>
+      <div class="project-meta"><span>Nov 2025</span></div>
+      <p class="muted">Co-Author and Presenter</p>
+      <p>Published and presented the research paper "MetaLens: A Web-Based Tool for Multi-Format Metadata Exploration" at an international IEEE conference, addressing metadata fragmentation across modern lakehouse systems. The work introduces a format-agnostic metadata exploration platform supporting Iceberg, Hudi, Delta, and Parquet for unified schema visibility and stronger data transparency. Presented the paper in the Smart Computing track, engaging with global researchers and industry experts while contributing practical insights to data engineering and lakehouse architecture discussions.</p>
+      <ul>
+        <li>Paper accepted and published at IEEE ICFT 2025</li>
+        <li>Presented in Smart Computing track to a global academic and industry audience</li>
+        <li>Participated in an internationally attended conference with cross-domain researchers</li>
+        <li>Proposed a format-agnostic metadata system for real-world data engineering challenges</li>
+      </ul>
+      <div class="project-meta">
+        <span><a href="https://drive.google.com/file/d/1n9PBSuwejB0hcB-KLgDvemBTHJacH6l9/view?usp=drive_link">IEEE Maharashtra Section Presentation</a></span>
+        <span><a href="https://ieeexplore.ieee.org/document/11336690">IEEE Xplore Publication</a></span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head"><span class="project-title">Finalist, Smart India Hackathon 2025 (Grand Finale)</span></div>
+      <div class="project-meta"><span>2025</span></div>
+      <p class="muted">Backend and Systems Contributor, Team: We Don't Test Anymore</p>
+      <p>Selected as a Grand Finale finalist in Smart India Hackathon 2025, one of India's largest national innovation competitions, while solving a real-world NTRO problem statement. Progressed through multiple evaluation rounds from 72,000+ submissions and 68,000+ teams, reaching the final stage among 1,360 shortlisted teams nationwide. The experience involved high-pressure problem-solving, expert evaluation cycles, and practical cybersecurity system design under real constraints.</p>
+      <ul>
+        <li>Grand Finale finalist among 68,000+ teams across India</li>
+        <li>Selected from 72,000+ idea submissions across 271 national problem statements</li>
+        <li>Worked on a real-world cybersecurity problem statement from NTRO</li>
+        <li>Demonstrated resilience and adaptability under national-level competitive pressure</li>
+      </ul>
+      <div class="project-meta">
+        <span><a href="https://drive.google.com/file/d/1raqRBojDWXZScJrNzUl7FnhDrqANJ_qE/view?usp=drive_link">Smart India Hackathon 2025</a></span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head"><span class="project-title">Finalist, IndiaAI GenAI Impact Hackathon (IISc Bangalore x IBM)</span></div>
+      <div class="project-meta"><span>Aug-Sep 2025</span></div>
+      <p class="muted">Core Systems and AI Contributor, Team: We Don't Test Anymore</p>
+      <p>Selected as a finalist in the IndiaAI GenAI Impact Hackathon 2025, organized by IISc Bangalore in collaboration with IBM, under the Agentic AI Applications for Real-World Issues track. Built PRISM AI, an agentic system designed to autonomously analyze enterprise workflows and trigger intelligent actions to improve coordination, reduce duplication, and strengthen decision-making. The competition brought together top teams across India to solve real-world challenges using generative AI and provided hands-on exposure to practical large-scale AI system design and deployment constraints.</p>
+      <ul>
+        <li>Finalist at a national-level AI hackathon hosted by IISc Bangalore and IBM</li>
+        <li>Built PRISM AI, an agentic system for real-world enterprise problem-solving</li>
+        <li>Competed among top AI-focused teams across India</li>
+        <li>Gained practical experience with GenAI and autonomous systems design</li>
+      </ul>
+      <div class="project-meta">
+        <span><a href="https://drive.google.com/file/d/1kK0BUT06cGJLqVWd_If6c_fSwKntv2y9/view?usp=drive_link">IndiaAI GenAI Impact Hackathon</a></span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head"><span class="project-title">Finalist, Odoo x Mindbend Hackathon '25 (NIT Surat)</span></div>
+      <div class="project-meta"><span>Apr 2025</span></div>
+      <p class="muted">Full-Stack and ML Systems Contributor, Team: SPD Emergency</p>
+      <p>Selected as a finalist at Mindbend Hackathon '25, a national-level 24-hour hackathon hosted by SVNIT Surat in collaboration with Odoo. Built Awkward-edu, a social-impact platform for teenagers combining a community interface with ML-driven behavioral analysis to detect distress signals and support early intervention. Delivered an end-to-end system under tight time constraints by integrating ML models, backend services, and frontend UX while adapting quickly to a new domain and large-scale system requirements.</p>
+      <ul>
+        <li>Finalist (Top 50) among 300+ participating teams nationwide</li>
+        <li>Built an ML-integrated platform for behavioral analysis and early distress detection</li>
+        <li>Delivered a complete full-stack and ML system within a 24-hour sprint</li>
+        <li>Competed against teams from IITs, NITs, and IIITs with strong execution under pressure</li>
+      </ul>
+      <div class="project-meta">
+        <span><a href="https://drive.google.com/file/d/11baXtiehmpa72gv1IUDT0PVcfXcPpzlg/view?usp=drive_link">Odoo x Mindbend Hackathon '25</a></span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head"><span class="project-title">Finalist, COEP MindSpark Hackathon '25 (Tata Motors)</span></div>
+      <div class="project-meta"><span>Oct 2025</span></div>
+      <p class="muted">Optimization and Systems Contributor, Team: We Don't Test Anymore</p>
+      <p>Selected as a finalist at COEP MindSpark Hackathon 2025, the flagship national-level hackathon hosted by COEP in collaboration with Tata Motors. Worked on a real-world manufacturing optimization problem focused on conveyor and buffer sequencing, requiring rapid system design and algorithmic decision-making under strict constraints. Adapted to a last-minute problem statement change by rebuilding the approach from scratch within 24 hours and successfully delivering a working simulation with optimized sequencing logic.</p>
+      <ul>
+        <li>Finalist in a national-level hackathon with an industry-backed Tata Motors problem statement</li>
+        <li>Solved an operations research optimization challenge for manufacturing systems</li>
+        <li>Rebuilt the full solution after a last-minute problem switch</li>
+        <li>Delivered working simulation and optimized sequencing logic within a 24-hour sprint</li>
+      </ul>
+      <div class="project-meta">
+        <span><a href="https://drive.google.com/file/d/1C0cyxxitDC9z7nRnz87xiHsYsg8Zp3r6/view?usp=drive_link">COEP MindSpark Hackathon '25</a></span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head"><span class="project-title">Finalist, RIT Hackathon 2k25 (AI/ML Track)</span></div>
+      <div class="project-meta"><span>2025</span></div>
+      <p class="muted">Backend and AI Systems Contributor, Team: The Code Crafters</p>
+      <p>Selected as a finalist at RIT Hackathon 2k25 in the AI/ML track, building Swasthya, an AI-driven WhatsApp healthcare platform focused on accessibility and real-time assistance. Developed an end-to-end system integrating AI query resolution, report analysis, and medical test booking through WhatsApp and web/mobile interfaces. Delivered a fully functional solution within a 24-hour sprint, demonstrating strong integration across backend, AI services, and communication infrastructure.</p>
+      <ul>
+        <li>First hackathon experience in first year, marking the start of practical software building</li>
+        <li>Built Krushi Samwardhan Mohim as a full-stack MERN platform from scratch in 24 hours</li>
+        <li>Integrated real-world farmer-focused modules: scheme awareness, weather support, agro-tourism, and tools marketplace</li>
+        <li>Strengthened core foundations in rapid prototyping, collaboration, and product-focused execution under constraints</li>
+      </ul>
+      <div class="project-meta">
+        <span><a href="https://drive.google.com/file/d/1jA_R-UKQmhQY3NLLncIf55hIl_QkH__p/view?usp=drive_link">RIT Hackathon 2k25</a></span>
+        <span><a href="https://www.linkedin.com/posts/anjali-kumbhar-9aa299252_exciting-news-we-are-thrilled-to-share-ugcPost-7313061804501274624-0Lav">LinkedIn Post</a></span>
+      </div>
+      <p class="muted" style="margin-top:10px">Secondary card on the timeline: <strong>ACM Hackathon 2023, first hackathon experience (Novice Track)</strong>, first-ever hackathon participation during first year, building Krushi Samwardhan Mohim, a MERN platform for farmers covering government schemes, weather insights, agro-tourism opportunities, and access to farming tools through a practical marketplace workflow.</p>
+    </div>
+  </section>
+
+  <section id="coding-portfolio">
+    <h2><span class="n">05</span> Coding Portfolio</h2>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">LeetCode</span>
+        <span class="project-type">| <a href="https://leetcode.com/u/om7057/">leetcode.com/u/om7057</a></span>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="stat-value">487</div><div class="stat-label">solved</div></div>
+        <div class="stat"><div class="stat-value">174 / 252 / 61</div><div class="stat-label">Easy / Med / Hard</div></div>
+        <div class="stat"><div class="stat-value">1458</div><div class="stat-label">contest rating</div></div>
+        <div class="stat"><div class="stat-value">13</div><div class="stat-label">contests</div></div>
+        <div class="stat"><div class="stat-value">top 59%</div><div class="stat-label">global percentile</div></div>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">Codeforces</span>
+        <span class="project-type">| <a href="https://codeforces.com/profile/om7057">codeforces.com/profile/om7057</a></span>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="stat-value">965</div><div class="stat-label">current rating</div></div>
+        <div class="stat"><div class="stat-value">1094</div><div class="stat-label">max rating</div></div>
+        <div class="stat"><div class="stat-value">newbie</div><div class="stat-label">rank</div></div>
+        <div class="stat"><div class="stat-value">33</div><div class="stat-label">rated contests</div></div>
+      </div>
+      <p class="muted" style="margin-top:10px">Rated since Jul 2023, mostly Div. 2/3/4 rounds.</p>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-title">CodeChef</span>
+        <span class="project-type">| <a href="https://www.codechef.com/users/alien_17">codechef.com/users/alien_17</a></span>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="stat-value">1481</div><div class="stat-label">rating (2&#9733;)</div></div>
+        <div class="stat"><div class="stat-value">679</div><div class="stat-label">solved</div></div>
+        <div class="stat"><div class="stat-value">46</div><div class="stat-label">contests</div></div>
+        <div class="stat"><div class="stat-value">27857</div><div class="stat-label">global rank</div></div>
+        <div class="stat"><div class="stat-value">26291</div><div class="stat-label">India rank</div></div>
+      </div>
+      <p class="muted" style="margin-top:10px">Rating shown as provisional on the profile.</p>
+    </div>
+
+    <p class="muted" style="margin-top:4px">Pulled directly from each platform's public API/profile; re-check periodically since ratings move.</p>
+  </section>
+
+  <section id="system-design">
+    <h2><span class="n">06</span> System Design &amp; System-Level Understanding</h2>
+    <div class="card">
+      <p class="muted">Not yet filled in.</p>
+      <div class="pending">pending: design write-ups, diagrams, or systems topics to document here</div>
+    </div>
+  </section>
+
+  <section id="collab">
+    <h2><span class="n">07</span> How you like to work with me</h2>
+    <div class="card">
+      <ul>
+        <li>Accuracy over polish: you've corrected me each time a claim drifted from the facts (a mislabeled repo, an overstated title, a wrong graduation status), and want that corrected immediately, not softened.</li>
+        <li>No em dashes in anything formal going out the door.</li>
+        <li>No Claude attribution on your own om7057 commits or PRs.</li>
+        <li>Terse is fine. You'll tell me directly when something's off instead of leaving it implied.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    Compiled from working memory and this session &middot; sections marked pending will fill in as you share details
+  </footer>
+</main>
+
+<script>
+  (function () {
+    try {
+      var sections = Array.prototype.slice.call(document.querySelectorAll('main > section[id]'));
+      var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+      var ids = sections.map(function (s) { return s.id; });
+
+      function routeFor(hash) {
+        var id = (hash || '').replace('#', '');
+        return ids.indexOf(id) !== -1 ? id : null;
+      }
+
+      function render() {
+        var target = routeFor(location.hash);
+        sections.forEach(function (s) {
+          s.hidden = !!target && s.id !== target;
+        });
+        links.forEach(function (a) {
+          var isActive = target
+            ? a.getAttribute('href') === '#' + target
+            : a.id === 'nav-all';
+          a.classList.toggle('active', !!isActive);
+        });
+        window.scrollTo(0, 0);
+      }
+
+      links.forEach(function (a) {
+        a.addEventListener('click', function () {
+          if (location.hash === a.getAttribute('href')) render();
+        });
+      });
+
+      window.addEventListener('hashchange', render);
+      render();
+    } catch (e) {}
+  })();
+
+  (function () {
+    try {
+      var ossNav = document.querySelector('.oss-nav');
+      if (!ossNav) return;
+      var repoButtons = Array.prototype.slice.call(ossNav.querySelectorAll('[data-oss-repo]'));
+      var projectButtons = Array.prototype.slice.call(ossNav.querySelectorAll('[data-project-toggle]'));
+      var ossCategories = Array.prototype.slice.call(document.querySelectorAll('.oss-category'));
+      var ossItems = Array.prototype.slice.call(document.querySelectorAll('.oss-item'));
+
+      function applyRepo(repo) {
+        ossItems.forEach(function (item) {
+          item.hidden = item.getAttribute('data-repo') !== repo;
+        });
+        ossCategories.forEach(function (cat) {
+          var visible = cat.querySelector('.oss-item:not([hidden])');
+          cat.hidden = !visible;
+        });
+      }
+
+      repoButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          repoButtons.forEach(function (b) { b.classList.toggle('active', b === btn); });
+          applyRepo(btn.getAttribute('data-oss-repo'));
+        });
+      });
+
+      projectButtons.forEach(function (btn) {
+        var subrepos = btn.nextElementSibling;
+        btn.setAttribute('aria-expanded', 'false');
+        btn.addEventListener('click', function () {
+          var expanded = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', String(!expanded));
+          subrepos.hidden = expanded;
+        });
+      });
+
+      var initial = ossNav.querySelector('[data-oss-repo].active');
+      if (initial) applyRepo(initial.getAttribute('data-oss-repo'));
+    } catch (e) {}
+  })();
+</script>
+</body>
+</html>
