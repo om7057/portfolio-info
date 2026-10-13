@@ -529,34 +529,36 @@
 
     <div class="oss-nav" role="tablist" aria-label="Filter by repo">
       <div class="oss-project">
-        <button type="button" class="oss-project-btn" data-project-toggle="OpenTelemetry"><span class="arrow">&#9656;</span> OpenTelemetry <span class="count">(32)</span></button>
+        <button type="button" class="oss-project-btn" data-project-toggle="OpenTelemetry"><span class="arrow">&#9656;</span> OpenTelemetry <span class="count">(33)</span></button>
         <div class="oss-subrepos" hidden>
           <button type="button" data-oss-repo="OpenTelemetry C++ SDK" class="active">OpenTelemetry C++ SDK <span class="count">(11)</span></button>
           <button type="button" data-oss-repo="OpenTelemetry Compile Instrumentation">OpenTelemetry Compile Instrumentation <span class="count">(10)</span></button>
           <button type="button" data-oss-repo="OpenTelemetry Go Contrib">OpenTelemetry Go Contrib <span class="count">(5)</span></button>
-          <button type="button" data-oss-repo="OpenTelemetry Go">OpenTelemetry Go <span class="count">(3)</span></button>
+          <button type="button" data-oss-repo="OpenTelemetry Go">OpenTelemetry Go <span class="count">(4)</span></button>
           <button type="button" data-oss-repo="OpenTelemetry Collector Contrib">OpenTelemetry Collector Contrib <span class="count">(1)</span></button>
           <button type="button" data-oss-repo="OpenTelemetry Semantic Conventions">OpenTelemetry Semantic Conventions <span class="count">(1)</span></button>
           <button type="button" data-oss-repo="OpenTelemetry Weaver">OpenTelemetry Weaver <span class="count">(1)</span></button>
         </div>
       </div>
       <div class="oss-project">
-        <button type="button" class="oss-project-btn" data-project-toggle="Jenkins"><span class="arrow">&#9656;</span> Jenkins <span class="count">(11)</span></button>
+        <button type="button" class="oss-project-btn" data-project-toggle="Jenkins"><span class="arrow">&#9656;</span> Jenkins <span class="count">(12)</span></button>
         <div class="oss-subrepos" hidden>
           <button type="button" data-oss-repo="Jenkins OpenTelemetry Plugin">Jenkins OpenTelemetry Plugin <span class="count">(6)</span></button>
           <button type="button" data-oss-repo="Jenkins Remoting">Jenkins Remoting <span class="count">(5)</span></button>
+          <button type="button" data-oss-repo="Jenkins SSH Agents Plugin">Jenkins SSH Agents Plugin <span class="count">(1)</span></button>
         </div>
       </div>
       <div class="oss-project">
-        <button type="button" class="oss-project-btn" data-project-toggle="Jaeger"><span class="arrow">&#9656;</span> Jaeger <span class="count">(8)</span></button>
+        <button type="button" class="oss-project-btn" data-project-toggle="Jaeger"><span class="arrow">&#9656;</span> Jaeger <span class="count">(10)</span></button>
         <div class="oss-subrepos" hidden>
-          <button type="button" data-oss-repo="Jaeger">Jaeger <span class="count">(7)</span></button>
+          <button type="button" data-oss-repo="Jaeger">Jaeger <span class="count">(8)</span></button>
           <button type="button" data-oss-repo="Jaeger IDL">Jaeger IDL <span class="count">(1)</span></button>
+          <button type="button" data-oss-repo="Jaeger UI">Jaeger UI <span class="count">(1)</span></button>
         </div>
       </div>
       <button type="button" data-oss-repo="GoFr">GoFr <span class="count">(5)</span></button>
+      <button type="button" data-oss-repo="Liquibase">Liquibase <span class="count">(4)</span></button>
       <button type="button" data-oss-repo="Prometheus">Prometheus <span class="count">(3)</span></button>
-      <button type="button" data-oss-repo="Liquibase">Liquibase <span class="count">(2)</span></button>
       <button type="button" data-oss-repo="Apicurio Registry">Apicurio Registry <span class="count">(1)</span></button>
       <button type="button" data-oss-repo="Argo CD">Argo CD <span class="count">(1)</span></button>
       <button type="button" data-oss-repo="HAMi">HAMi <span class="count">(1)</span></button>
@@ -653,6 +655,24 @@
     <div class="oss-category" data-cat="codehealth">
       <h3 class="oss-category-title">Code Health &amp; Static Analysis</h3>
       <p class="oss-category-summary">Mechanical lint sweeps and tooling-correctness fixes that keep a project's own build, codegen, and CI pipeline honest, work that closes out a backlog rather than adding user-facing features.</p>
+
+      <div class="oss-item" data-repo="OpenTelemetry Go" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Documented the SDK log package's supported environment variables in one place</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go</span><a href="https://github.com/open-telemetry/opentelemetry-go/pull/9016">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go/issues/9013">Issue</a></div>
+        <ul>
+          <li>OTEL_BLRP_* and OTEL_LOGRECORD_* environment variables were each documented individually on their respective options, with no single place listing what sdk/log actually reads from the environment.</li>
+          <li>Added an Environment Variables section to the package doc pulling them together.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Jenkins SSH Agents Plugin" style="border-left:3px solid #d24939">
+        <div class="oss-item-head"><span class="oss-item-title">jvmOptions already let you recover a crashed agent JVM, nobody had documented it</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jenkins SSH Agents Plugin</span><a href="https://github.com/jenkinsci/ssh-agents-plugin/pull/1001">PR</a><a href="https://github.com/jenkinsci/ssh-agents-plugin/issues/775">Issue</a></div>
+        <ul>
+          <li>Issue #775 reports that an agent whose JVM runs out of memory stays connected in a broken state, since nothing detects the dead process. Checked whether the fix needed a code change and found it didn't: jvmOptions already passes straight into the remote launch command, so -XX:OnOutOfMemoryError or -XX:+ExitOnOutOfMemoryError already works today, just undocumented.</li>
+          <li>Documented the flag in the field's help text so users hit by #775 get an immediate mitigation without waiting on a plugin release; left the issue open rather than claiming it fully closes the gap, since it adds no proactive detection on Jenkins' side.</li>
+        </ul>
+      </div>
 
       <div class="oss-item" data-repo="OpenTelemetry C++ SDK" style="border-left:3px solid #8a5cff">
         <div class="oss-item-head"><span class="oss-item-title">Qualified C library calls with std:: after a header modernization</span></div>
@@ -774,6 +794,24 @@
     <div class="oss-category" data-cat="silent-failure">
       <h3 class="oss-category-title">Silent Failure &amp; Data Loss</h3>
       <p class="oss-category-summary">The recurring pattern across these contributions: code assumes a value, response, or success case is always present, so when it isn't, the failure comes out as a swallowed error, missing data, or a crash instead of a controlled outcome.</p>
+
+      <div class="oss-item" data-repo="Jaeger UI" style="border-left:3px solid #60d0e4">
+        <div class="oss-item-head"><span class="oss-item-title">Migrated TraceStatistics off class components, and caught a search bug the migration would have reintroduced</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jaeger UI</span><a href="https://github.com/jaegertracing/jaeger-ui/pull/4483">PR</a><a href="https://github.com/jaegertracing/jaeger-ui/issues/3384">Issue</a></div>
+        <ul>
+          <li>While converting the class component to hooks, found that searchInTable mutates its input array in place and returns the same reference, harmless under class setState, but a correctness bug once migrated, since useState's setter bails out on identical object identity and the table would never re-render on search.</li>
+          <li>Fixed by spreading into a new array before setting state, then finished the hooks migration, dropping three fields (sortIndex, sortAsc, valueNameSelector2) that were write-only in the original class component with no behavior to preserve.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Liquibase" style="border-left:3px solid #2f8fff">
+        <div class="oss-item-head"><span class="oss-item-title">CSV loadData silently misparsed a leading comment or blank line as the header</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Liquibase</span><a href="https://github.com/liquibase/liquibase/pull/7919">PR</a><a href="https://github.com/liquibase/liquibase/issues/4434">Issue</a></div>
+        <ul>
+          <li>generateStatements() read the first line unconditionally as the header, even though comment and blank lines were already skipped for data rows via commentLineStartsWith/isLineCommented, a CSV starting with a # comment or blank line got that line parsed as the header, and every row after it failed with a column-count mismatch.</li>
+          <li>Added a shared isSkippableLine() helper and applied it before reading the header too, replacing the inline duplicate the data-row loop already had; loadUpdateData inherits the fix since it extends LoadDataChange.</li>
+        </ul>
+      </div>
 
       <div class="oss-item" data-repo="OpenTelemetry Compile Instrumentation" style="border-left:3px solid #8a5cff">
         <div class="oss-item-head"><span class="oss-item-title">AMQP channel teardown never cleaned up its tracking maps</span></div>
@@ -951,6 +989,15 @@
       <h3 class="oss-category-title">Concurrency &amp; Thread Safety</h3>
       <p class="oss-category-summary">Bugs that only exist because state, or a resource's ownership, is shared without a clear boundary. The fix is almost never a lock, it's redrawing where that boundary is.</p>
 
+      <div class="oss-item" data-repo="Liquibase" style="border-left:3px solid #2f8fff">
+        <div class="oss-item-head"><span class="oss-item-title">updateCount and updateSql grabbed the changelog lock even when there was nothing to migrate</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Liquibase</span><a href="https://github.com/liquibase/liquibase/pull/7905">PR</a><a href="https://github.com/liquibase/liquibase/issues/6102">Issue</a></div>
+        <ul>
+          <li>Plain update already avoids blocking on a held lock when its fast-check finds nothing pending, by dropping LockService.class from its pipeline dependencies and acquiring the lock lazily only after isUpToDate() confirms real work. updateCount and updateSql still declared that dependency, so LockServiceCommandStep grabbed the lock unconditionally before the fast-check ran.</li>
+          <li>Extended the same lazy-acquire pattern to both commands; left updateToTag out since it disables the fast-check entirely, so there's no path this fix would help.</li>
+        </ul>
+      </div>
+
       <div class="oss-item" data-repo="GoFr" style="border-left:3px solid #00adb5">
         <div class="oss-item-head"><span class="oss-item-title">Parent goroutine read a context field the handler goroutine was reassigning</span></div>
         <div class="oss-item-links"><span class="oss-item-repo">GoFr</span><a href="https://github.com/gofr-dev/gofr/pull/4111">PR</a></div>
@@ -1054,6 +1101,15 @@
     <div class="oss-category" data-cat="test-coverage">
       <h3 class="oss-category-title">Test Coverage &amp; Feature Extension</h3>
       <p class="oss-category-summary">Filling gaps rather than fixing bugs: missing test coverage, triplicated code that should be one shared implementation, or a new capability built to match an established pattern already used elsewhere in the codebase.</p>
+
+      <div class="oss-item" data-repo="Jaeger" style="border-left:3px solid #60d0e4">
+        <div class="oss-item-head"><span class="oss-item-title">Routed structured query filters (RFC 0005 M3) to ClickHouse SQL instead of refusing anything the legacy shape couldn't express</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Jaeger</span><a href="https://github.com/jaegertracing/jaeger/pull/9701">PR</a></div>
+        <ul>
+          <li>query.Filter never reached the ClickHouse reader: SearchCapabilities declared no Filter field, so every filter got folded through ToLegacyShape() first, which only expresses conjunctive eq-only queries over indexed levels, OR/NOT, non-eq comparisons, or unsupported levels were refused regardless of whether ClickHouse's own schema could actually answer them.</li>
+          <li>Implemented FilterCapabilities for and/or/not, eq, and the four ordered comparisons on span.duration, reusing the existing typed-column machinery rather than duplicating it; verified unqualified queries stay byte-identical against the existing snapshot test.</li>
+        </ul>
+      </div>
 
       <div class="oss-item" data-repo="Jaeger" style="border-left:3px solid #60d0e4">
         <div class="oss-item-head"><span class="oss-item-title">Extended the span-search conformance battery to cover scope, link, and status fields</span></div>
