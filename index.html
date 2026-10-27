@@ -364,9 +364,14 @@
 
   .oss-nav {
     display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .oss-nav-top {
+    display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 18px;
   }
   .oss-nav button {
     font-family: var(--font);
@@ -389,7 +394,6 @@
     border-color: var(--fg);
   }
   .oss-nav .count { color: var(--fg-tertiary); text-transform: none; letter-spacing: 0; font-weight: 400; }
-  .oss-project { display: flex; flex-direction: column; gap: 8px; }
   .oss-project-btn .arrow {
     display: inline-block;
     transition: transform 0.15s ease;
@@ -405,9 +409,9 @@
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    padding: 8px 0 2px 16px;
-    border-left: 1px dashed var(--border);
-    margin-left: 6px;
+    padding: 10px 0 10px 16px;
+    border-left: 2px solid var(--border);
+    margin-left: 2px;
   }
   .stat-value {
     font-family: var(--font);
@@ -528,40 +532,37 @@
     <p class="sub" style="margin-bottom:16px">Enough merged work (20+ PRs) that <strong>OpenTelemetry invited you to vote in its Governing Committee election</strong>. Filterable by repo, same as the portfolio's Open Source Explorer.</p>
 
     <div class="oss-nav" role="tablist" aria-label="Filter by repo">
-      <div class="oss-project">
+      <div class="oss-nav-top">
         <button type="button" class="oss-project-btn" data-project-toggle="OpenTelemetry"><span class="arrow">&#9656;</span> OpenTelemetry <span class="count">(39)</span></button>
-        <div class="oss-subrepos" hidden>
-          <button type="button" data-oss-repo="OpenTelemetry Compile Instrumentation" class="active">OpenTelemetry Compile Instrumentation <span class="count">(13)</span></button>
-          <button type="button" data-oss-repo="OpenTelemetry C++ SDK">OpenTelemetry C++ SDK <span class="count">(11)</span></button>
-          <button type="button" data-oss-repo="OpenTelemetry Go">OpenTelemetry Go <span class="count">(6)</span></button>
-          <button type="button" data-oss-repo="OpenTelemetry Go Contrib">OpenTelemetry Go Contrib <span class="count">(5)</span></button>
-          <button type="button" data-oss-repo="OpenTelemetry Semantic Conventions">OpenTelemetry Semantic Conventions <span class="count">(2)</span></button>
-          <button type="button" data-oss-repo="OpenTelemetry Collector Contrib">OpenTelemetry Collector Contrib <span class="count">(1)</span></button>
-          <button type="button" data-oss-repo="OpenTelemetry Weaver">OpenTelemetry Weaver <span class="count">(1)</span></button>
-        </div>
-      </div>
-      <div class="oss-project">
         <button type="button" class="oss-project-btn" data-project-toggle="Jenkins"><span class="arrow">&#9656;</span> Jenkins <span class="count">(12)</span></button>
-        <div class="oss-subrepos" hidden>
-          <button type="button" data-oss-repo="Jenkins OpenTelemetry Plugin">Jenkins OpenTelemetry Plugin <span class="count">(6)</span></button>
-          <button type="button" data-oss-repo="Jenkins Remoting">Jenkins Remoting <span class="count">(5)</span></button>
-          <button type="button" data-oss-repo="Jenkins SSH Agents Plugin">Jenkins SSH Agents Plugin <span class="count">(1)</span></button>
-        </div>
-      </div>
-      <div class="oss-project">
         <button type="button" class="oss-project-btn" data-project-toggle="Jaeger"><span class="arrow">&#9656;</span> Jaeger <span class="count">(10)</span></button>
-        <div class="oss-subrepos" hidden>
-          <button type="button" data-oss-repo="Jaeger">Jaeger <span class="count">(8)</span></button>
-          <button type="button" data-oss-repo="Jaeger IDL">Jaeger IDL <span class="count">(1)</span></button>
-          <button type="button" data-oss-repo="Jaeger UI">Jaeger UI <span class="count">(1)</span></button>
-        </div>
+        <button type="button" data-oss-repo="GoFr">GoFr <span class="count">(5)</span></button>
+        <button type="button" data-oss-repo="Liquibase">Liquibase <span class="count">(4)</span></button>
+        <button type="button" data-oss-repo="Prometheus">Prometheus <span class="count">(3)</span></button>
+        <button type="button" data-oss-repo="Apicurio Registry">Apicurio Registry <span class="count">(1)</span></button>
+        <button type="button" data-oss-repo="Argo CD">Argo CD <span class="count">(1)</span></button>
+        <button type="button" data-oss-repo="HAMi">HAMi <span class="count">(1)</span></button>
       </div>
-      <button type="button" data-oss-repo="GoFr">GoFr <span class="count">(5)</span></button>
-      <button type="button" data-oss-repo="Liquibase">Liquibase <span class="count">(4)</span></button>
-      <button type="button" data-oss-repo="Prometheus">Prometheus <span class="count">(3)</span></button>
-      <button type="button" data-oss-repo="Apicurio Registry">Apicurio Registry <span class="count">(1)</span></button>
-      <button type="button" data-oss-repo="Argo CD">Argo CD <span class="count">(1)</span></button>
-      <button type="button" data-oss-repo="HAMi">HAMi <span class="count">(1)</span></button>
+
+      <div class="oss-subrepos" data-subrepos-for="OpenTelemetry" hidden>
+        <button type="button" data-oss-repo="OpenTelemetry Compile Instrumentation" class="active">OpenTelemetry Compile Instrumentation <span class="count">(13)</span></button>
+        <button type="button" data-oss-repo="OpenTelemetry C++ SDK">OpenTelemetry C++ SDK <span class="count">(11)</span></button>
+        <button type="button" data-oss-repo="OpenTelemetry Go">OpenTelemetry Go <span class="count">(6)</span></button>
+        <button type="button" data-oss-repo="OpenTelemetry Go Contrib">OpenTelemetry Go Contrib <span class="count">(5)</span></button>
+        <button type="button" data-oss-repo="OpenTelemetry Semantic Conventions">OpenTelemetry Semantic Conventions <span class="count">(2)</span></button>
+        <button type="button" data-oss-repo="OpenTelemetry Collector Contrib">OpenTelemetry Collector Contrib <span class="count">(1)</span></button>
+        <button type="button" data-oss-repo="OpenTelemetry Weaver">OpenTelemetry Weaver <span class="count">(1)</span></button>
+      </div>
+      <div class="oss-subrepos" data-subrepos-for="Jenkins" hidden>
+        <button type="button" data-oss-repo="Jenkins OpenTelemetry Plugin">Jenkins OpenTelemetry Plugin <span class="count">(6)</span></button>
+        <button type="button" data-oss-repo="Jenkins Remoting">Jenkins Remoting <span class="count">(5)</span></button>
+        <button type="button" data-oss-repo="Jenkins SSH Agents Plugin">Jenkins SSH Agents Plugin <span class="count">(1)</span></button>
+      </div>
+      <div class="oss-subrepos" data-subrepos-for="Jaeger" hidden>
+        <button type="button" data-oss-repo="Jaeger">Jaeger <span class="count">(8)</span></button>
+        <button type="button" data-oss-repo="Jaeger IDL">Jaeger IDL <span class="count">(1)</span></button>
+        <button type="button" data-oss-repo="Jaeger UI">Jaeger UI <span class="count">(1)</span></button>
+      </div>
     </div>
 
     <div class="oss-category" data-cat="cardinality">
@@ -1896,12 +1897,19 @@
       });
 
       projectButtons.forEach(function (btn) {
-        var subrepos = btn.nextElementSibling;
+        var project = btn.getAttribute('data-project-toggle');
+        var subrepos = ossNav.querySelector('[data-subrepos-for="' + project + '"]');
         btn.setAttribute('aria-expanded', 'false');
         btn.addEventListener('click', function () {
           var expanded = btn.getAttribute('aria-expanded') === 'true';
+          projectButtons.forEach(function (b) {
+            if (b === btn) return;
+            b.setAttribute('aria-expanded', 'false');
+            var other = ossNav.querySelector('[data-subrepos-for="' + b.getAttribute('data-project-toggle') + '"]');
+            if (other) other.hidden = true;
+          });
           btn.setAttribute('aria-expanded', String(!expanded));
-          subrepos.hidden = expanded;
+          if (subrepos) subrepos.hidden = expanded;
         });
       });
 
