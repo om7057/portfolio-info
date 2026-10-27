@@ -529,14 +529,14 @@
 
     <div class="oss-nav" role="tablist" aria-label="Filter by repo">
       <div class="oss-project">
-        <button type="button" class="oss-project-btn" data-project-toggle="OpenTelemetry"><span class="arrow">&#9656;</span> OpenTelemetry <span class="count">(33)</span></button>
+        <button type="button" class="oss-project-btn" data-project-toggle="OpenTelemetry"><span class="arrow">&#9656;</span> OpenTelemetry <span class="count">(39)</span></button>
         <div class="oss-subrepos" hidden>
-          <button type="button" data-oss-repo="OpenTelemetry C++ SDK" class="active">OpenTelemetry C++ SDK <span class="count">(11)</span></button>
-          <button type="button" data-oss-repo="OpenTelemetry Compile Instrumentation">OpenTelemetry Compile Instrumentation <span class="count">(10)</span></button>
+          <button type="button" data-oss-repo="OpenTelemetry Compile Instrumentation" class="active">OpenTelemetry Compile Instrumentation <span class="count">(13)</span></button>
+          <button type="button" data-oss-repo="OpenTelemetry C++ SDK">OpenTelemetry C++ SDK <span class="count">(11)</span></button>
+          <button type="button" data-oss-repo="OpenTelemetry Go">OpenTelemetry Go <span class="count">(6)</span></button>
           <button type="button" data-oss-repo="OpenTelemetry Go Contrib">OpenTelemetry Go Contrib <span class="count">(5)</span></button>
-          <button type="button" data-oss-repo="OpenTelemetry Go">OpenTelemetry Go <span class="count">(4)</span></button>
+          <button type="button" data-oss-repo="OpenTelemetry Semantic Conventions">OpenTelemetry Semantic Conventions <span class="count">(2)</span></button>
           <button type="button" data-oss-repo="OpenTelemetry Collector Contrib">OpenTelemetry Collector Contrib <span class="count">(1)</span></button>
-          <button type="button" data-oss-repo="OpenTelemetry Semantic Conventions">OpenTelemetry Semantic Conventions <span class="count">(1)</span></button>
           <button type="button" data-oss-repo="OpenTelemetry Weaver">OpenTelemetry Weaver <span class="count">(1)</span></button>
         </div>
       </div>
@@ -600,6 +600,15 @@
       <h3 class="oss-category-title">Specification Compliance</h3>
       <p class="oss-category-summary">Places where an implementation had quietly drifted from what the spec actually requires, usually invisible until someone compares behavior against another language's SDK.</p>
 
+      <div class="oss-item" data-repo="OpenTelemetry Semantic Conventions" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Suppressed the well-known-values table for single-member enums at the source</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Semantic Conventions</span><a href="https://github.com/open-telemetry/semantic-conventions/pull/4047">PR</a></div>
+        <ul>
+          <li>An enum with zero or one non-deprecated members, like error.type whose only member is its _OTHER fallback, rendered a well-known-values table with nothing left to document, repeated on every page that referenced the attribute. Checked the whole registry and found only two attributes affected.</li>
+          <li>Added active_member_count() to the shared enum macro and skipped the table below that threshold; this is the source-side fix the Weaver markdown templates below were later ported to match.</li>
+        </ul>
+      </div>
+
       <div class="oss-item" data-repo="OpenTelemetry Weaver" style="border-left:3px solid #8a5cff">
         <div class="oss-item-head"><span class="oss-item-title">Ported fallback-only enum suppression to the Weaver markdown templates</span></div>
         <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Weaver</span><a href="https://github.com/open-telemetry/opentelemetry-weaver-packages/pull/66">PR</a></div>
@@ -657,11 +666,20 @@
       <p class="oss-category-summary">Mechanical lint sweeps and tooling-correctness fixes that keep a project's own build, codegen, and CI pipeline honest, work that closes out a backlog rather than adding user-facing features.</p>
 
       <div class="oss-item" data-repo="OpenTelemetry Go" style="border-left:3px solid #8a5cff">
-        <div class="oss-item-head"><span class="oss-item-title">Documented the SDK log package's supported environment variables in one place</span></div>
+        <div class="oss-item-head"><span class="oss-item-title">Documented every SDK package's supported environment variables in one place, across three PRs</span></div>
         <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go</span><a href="https://github.com/open-telemetry/opentelemetry-go/pull/9016">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go/issues/9013">Issue</a></div>
         <ul>
-          <li>OTEL_BLRP_* and OTEL_LOGRECORD_* environment variables were each documented individually on their respective options, with no single place listing what sdk/log actually reads from the environment.</li>
-          <li>Added an Environment Variables section to the package doc pulling them together.</li>
+          <li>Environment variables for sdk/log (OTEL_BLRP_*, OTEL_LOGRECORD_*), sdk/metric (OTEL_METRIC_EXPORT_INTERVAL, OTEL_METRICS_EXEMPLAR_FILTER, and others), and internal/x were each documented individually on their respective options, or in sdk/metric's case not documented at all, with no single place listing what each package actually reads from the environment.</li>
+          <li>Added an Environment Variables section to each package doc (#9016, #9015) and filled in the missing internal/x READMEs (#9017), following the existing otlptracegrpc README as the pattern for the one that had none.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Compile Instrumentation" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Cached a reflection-based GVK lookup in the k8s client-go instrumentation's hottest path</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go (Compile Instrumentation)</span><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/pull/1288">PR</a></div>
+        <ul>
+          <li>getObjectInfo ran a reflection-based scheme.Scheme.ObjectKinds scan on every single informer event. Caching naively by reflect.Type would have let two unrelated CRDs watched through dynamic informers collide into the same entry, since they all share one Go type (unstructured.Unstructured).</li>
+          <li>Reads the GVK directly off unstructured objects before ever touching the cache, routing around the collision entirely, and only falls back to a type-keyed cache for genuinely typed objects; cut the steady-state cost from ~414ns to ~12ns per lookup.</li>
         </ul>
       </div>
 
@@ -794,6 +812,33 @@
     <div class="oss-category" data-cat="silent-failure">
       <h3 class="oss-category-title">Silent Failure &amp; Data Loss</h3>
       <p class="oss-category-summary">The recurring pattern across these contributions: code assumes a value, response, or success case is always present, so when it isn't, the failure comes out as a swallowed error, missing data, or a crash instead of a controlled outcome.</p>
+
+      <div class="oss-item" data-repo="OpenTelemetry Go" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Prometheus exporter dropped an exemplar entirely when its attribute labels exceeded the rune limit</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go</span><a href="https://github.com/open-telemetry/opentelemetry-go/pull/9031">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go/issues/6718">Issue</a></div>
+        <ul>
+          <li>addExemplars let prometheus client-go's label-length error propagate up from NewMetricWithExemplars, dropping the whole exemplar when its combined labels exceeded 128 runes, even though the trace and span IDs alone were well within the limit and are the most valuable part of it.</li>
+          <li>Checks the combined label length before building the exemplar; over the limit, drops only the filtered-attribute labels and keeps the trace/span IDs, with a warning logged so the truncation is visible instead of silent.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Compile Instrumentation" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">OpenAI instrumentation silently dropped telemetry entirely on oversized request and response bodies</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go (Compile Instrumentation)</span><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/pull/1459">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/issues/1309">Issue</a></div>
+        <ul>
+          <li>Continued a stalled PR with open review items. Oversized bodies were previously passed through completely uninstrumented, losing span and response telemetry that didn't even depend on the request size.</li>
+          <li>Reads bodies through a bounded helper that keeps the span and response telemetry, only omitting request-body-derived attributes above the cap, and logs when telemetry is dropped instead of losing it silently; applied identically across the v1, v2, and v3 module copies.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Compile Instrumentation" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">A rule file reached through a symbolic link could silently collide with another and drop its rules</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go (Compile Instrumentation)</span><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/pull/1515">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/issues/1487">Issue</a></div>
+        <ul>
+          <li>ruleFileKey ran filepath.Abs before filepath.EvalSymlinks; Abs cleans .. components lexically, so a .. segment deleted the preceding path component before any symlink in it was resolved. Two rule files reachable through different paths could collapse onto the same cache key, and the loader silently dropped the second file's rules.</li>
+          <li>Swapped the order: resolve symlinks first, then anchor with Abs, with a regression test reproducing the exact collision.</li>
+        </ul>
+      </div>
 
       <div class="oss-item" data-repo="Jaeger UI" style="border-left:3px solid #60d0e4">
         <div class="oss-item-head"><span class="oss-item-title">Migrated TraceStatistics off class components, and caught a search bug the migration would have reintroduced</span></div>
@@ -1101,6 +1146,15 @@
     <div class="oss-category" data-cat="test-coverage">
       <h3 class="oss-category-title">Test Coverage &amp; Feature Extension</h3>
       <p class="oss-category-summary">Filling gaps rather than fixing bugs: missing test coverage, triplicated code that should be one shared implementation, or a new capability built to match an established pattern already used elsewhere in the codebase.</p>
+
+      <div class="oss-item" data-repo="OpenTelemetry Go" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Added a CI check to catch the next internal/baggage cross-module compatibility break before it ships</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go</span><a href="https://github.com/open-telemetry/opentelemetry-go/pull/9200">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go/issues/9199">Issue</a></div>
+        <ul>
+          <li>bridge/opentracing depends on internal/baggage, a package with no API-compatibility guarantees, even though bridge/opentracing is separately versioned against its exact shape; this already broke once in a released version when a field became a method.</li>
+          <li>Added a script that builds against the latest released bridge/opentracing tag with the root module replaced to local source, wired into CI on changes to baggage/; verified it actually reproduces the prior break when the same rename is made locally.</li>
+        </ul>
+      </div>
 
       <div class="oss-item" data-repo="Jaeger" style="border-left:3px solid #60d0e4">
         <div class="oss-item-head"><span class="oss-item-title">Routed structured query filters (RFC 0005 M3) to ClickHouse SQL instead of refusing anything the legacy shape couldn't express</span></div>
