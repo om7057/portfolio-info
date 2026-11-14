@@ -533,19 +533,20 @@
 
     <div class="oss-nav" role="tablist" aria-label="Filter by repo">
       <div class="oss-nav-top">
-        <button type="button" class="oss-project-btn" data-project-toggle="OpenTelemetry"><span class="arrow">&#9656;</span> OpenTelemetry <span class="count">(42)</span></button>
+        <button type="button" class="oss-project-btn" data-project-toggle="OpenTelemetry"><span class="arrow">&#9656;</span> OpenTelemetry <span class="count">(43)</span></button>
         <button type="button" class="oss-project-btn" data-project-toggle="Jenkins"><span class="arrow">&#9656;</span> Jenkins <span class="count">(12)</span></button>
         <button type="button" class="oss-project-btn" data-project-toggle="Jaeger"><span class="arrow">&#9656;</span> Jaeger <span class="count">(12)</span></button>
         <button type="button" data-oss-repo="GoFr">GoFr <span class="count">(5)</span></button>
         <button type="button" data-oss-repo="Liquibase">Liquibase <span class="count">(5)</span></button>
         <button type="button" data-oss-repo="Prometheus">Prometheus <span class="count">(3)</span></button>
+        <button type="button" data-oss-repo="Juju">Juju <span class="count">(2)</span></button>
         <button type="button" data-oss-repo="Apicurio Registry">Apicurio Registry <span class="count">(1)</span></button>
         <button type="button" data-oss-repo="Argo CD">Argo CD <span class="count">(1)</span></button>
         <button type="button" data-oss-repo="HAMi">HAMi <span class="count">(1)</span></button>
       </div>
 
       <div class="oss-subrepos" data-subrepos-for="OpenTelemetry" hidden>
-        <button type="button" data-oss-repo="OpenTelemetry Compile Instrumentation" class="active">OpenTelemetry Compile Instrumentation <span class="count">(16)</span></button>
+        <button type="button" data-oss-repo="OpenTelemetry Compile Instrumentation" class="active">OpenTelemetry Compile Instrumentation <span class="count">(17)</span></button>
         <button type="button" data-oss-repo="OpenTelemetry C++ SDK">OpenTelemetry C++ SDK <span class="count">(11)</span></button>
         <button type="button" data-oss-repo="OpenTelemetry Go">OpenTelemetry Go <span class="count">(6)</span></button>
         <button type="button" data-oss-repo="OpenTelemetry Go Contrib">OpenTelemetry Go Contrib <span class="count">(5)</span></button>
@@ -822,6 +823,33 @@
     <div class="oss-category" data-cat="silent-failure">
       <h3 class="oss-category-title">Silent Failure &amp; Data Loss</h3>
       <p class="oss-category-summary">The recurring pattern across these contributions: code assumes a value, response, or success case is always present, so when it isn't, the failure comes out as a swallowed error, missing data, or a crash instead of a controlled outcome.</p>
+
+      <div class="oss-item" data-repo="Juju" style="border-left:3px solid #60a5fa">
+        <div class="oss-item-head"><span class="oss-item-title">Integration tests silently overwrote a developer's real AWS CLI credentials with no guard beyond a file-exists check</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Juju</span><a href="https://github.com/juju/juju/pull/23553">PR</a><a href="https://github.com/juju/juju/issues/23400">Issue</a></div>
+        <ul>
+          <li>setup_awscli_credential wrote directly into $HOME/.aws/credentials and $HOME/.aws/config, only skipping the write if that file already existed; on a machine with no prior AWS setup, running a suite silently clobbered $HOME/.aws with nothing to restore it, which could break a later local juju bootstrap aws.</li>
+          <li>Isolates AWS CLI config under a new CREDS_DIR outside the test directory, using AWS_SHARED_CREDENTIALS_FILE and AWS_CONFIG_FILE, removed unconditionally in cleanup() regardless of test result so credentials are never written to $HOME, never archived in CI logs, and never retained after a failed run.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="Juju" style="border-left:3px solid #60a5fa">
+        <div class="oss-item-head"><span class="oss-item-title">Same credential-clobbering bug class as the AWS CLI fix, this time for gcloud</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Juju</span><a href="https://github.com/juju/juju/pull/23554">PR</a><a href="https://github.com/juju/juju/issues/23534">Issue</a></div>
+        <ul>
+          <li>setup_gcloudcli_credential ran gcloud auth activate-service-account and config set project directly against the developer's own ~/.config/gcloud, guarded only by checking whether an account was already active; this could silently overwrite a developer's real gcloud state.</li>
+          <li>Exports CLOUDSDK_CONFIG into the same CREDS_DIR scratch directory before any gcloud command runs, independent of the AWS fix (same shape, not stacked), so gcloud's config is isolated and cleaned up the same way.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Compile Instrumentation" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">Unreachable return-value hook methods panicked instead of returning safely when no After hook existed</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go (Compile Instrumentation)</span><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/pull/1479">PR</a></div>
+        <ul>
+          <li>GetReturnVal, SetReturnVal and GetReturnValCount stay reachable from a Before hook even when a rule has no After hook to populate them; a prior stalled PR's approach made them panic instead, which could abort the Before hook mid-run under the trampoline's recover or crash the app if the context escaped it.</li>
+          <li>Stubs the three methods to their pre-existing no-return-values behavior (nil, no-op, 0) instead, derived from one method-to-body map so the method set and count can't silently drift apart; generic targets are left untouched since their return-value methods are intentionally unsupported and must keep panicking.</li>
+        </ul>
+      </div>
 
       <div class="oss-item" data-repo="Jaeger UI" style="border-left:3px solid #60d0e4">
         <div class="oss-item-head"><span class="oss-item-title">Two divergent shouldDisableCollapse implementations let collapseAll/collapseOne silently no-op</span></div>
