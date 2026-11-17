@@ -533,20 +533,20 @@
 
     <div class="oss-nav" role="tablist" aria-label="Filter by repo">
       <div class="oss-nav-top">
-        <button type="button" class="oss-project-btn" data-project-toggle="OpenTelemetry"><span class="arrow">&#9656;</span> OpenTelemetry <span class="count">(43)</span></button>
+        <button type="button" class="oss-project-btn" data-project-toggle="OpenTelemetry"><span class="arrow">&#9656;</span> OpenTelemetry <span class="count">(45)</span></button>
         <button type="button" class="oss-project-btn" data-project-toggle="Jenkins"><span class="arrow">&#9656;</span> Jenkins <span class="count">(12)</span></button>
         <button type="button" class="oss-project-btn" data-project-toggle="Jaeger"><span class="arrow">&#9656;</span> Jaeger <span class="count">(12)</span></button>
         <button type="button" data-oss-repo="GoFr">GoFr <span class="count">(5)</span></button>
         <button type="button" data-oss-repo="Liquibase">Liquibase <span class="count">(5)</span></button>
         <button type="button" data-oss-repo="Prometheus">Prometheus <span class="count">(3)</span></button>
-        <button type="button" data-oss-repo="Juju">Juju <span class="count">(2)</span></button>
+        <button type="button" data-oss-repo="Juju">Juju <span class="count">(3)</span></button>
         <button type="button" data-oss-repo="Apicurio Registry">Apicurio Registry <span class="count">(1)</span></button>
         <button type="button" data-oss-repo="Argo CD">Argo CD <span class="count">(1)</span></button>
         <button type="button" data-oss-repo="HAMi">HAMi <span class="count">(1)</span></button>
       </div>
 
       <div class="oss-subrepos" data-subrepos-for="OpenTelemetry" hidden>
-        <button type="button" data-oss-repo="OpenTelemetry Compile Instrumentation" class="active">OpenTelemetry Compile Instrumentation <span class="count">(17)</span></button>
+        <button type="button" data-oss-repo="OpenTelemetry Compile Instrumentation" class="active">OpenTelemetry Compile Instrumentation <span class="count">(19)</span></button>
         <button type="button" data-oss-repo="OpenTelemetry C++ SDK">OpenTelemetry C++ SDK <span class="count">(11)</span></button>
         <button type="button" data-oss-repo="OpenTelemetry Go">OpenTelemetry Go <span class="count">(6)</span></button>
         <button type="button" data-oss-repo="OpenTelemetry Go Contrib">OpenTelemetry Go Contrib <span class="count">(5)</span></button>
@@ -666,6 +666,24 @@
     <div class="oss-category" data-cat="codehealth">
       <h3 class="oss-category-title">Code Health &amp; Static Analysis</h3>
       <p class="oss-category-summary">Mechanical lint sweeps and tooling-correctness fixes that keep a project's own build, codegen, and CI pipeline honest, work that closes out a backlog rather than adding user-facing features.</p>
+
+      <div class="oss-item" data-repo="Juju" style="border-left:3px solid #60a5fa">
+        <div class="oss-item-head"><span class="oss-item-title">add-k8s accepted an invalid credential name, only failing later with an opaque bootstrap error</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">Juju</span><a href="https://github.com/juju/juju/pull/23789">PR</a><a href="https://github.com/juju/juju/issues/23329">Issue</a></div>
+        <ul>
+          <li>juju add-k8s &lt;name&gt; uses the given name as both the cloud name and the credential name, but only validated it against cloud name clashes; cloud names allow a leading digit while credential names must start with a letter, so a name like 36k8s was accepted and only failed later at juju bootstrap with an opaque credential name not valid error.</li>
+          <li>Added a check validating the name against names.IsValidCloudCredentialName in verifyName, so add-k8s rejects it up front instead of deferring to a confusing downstream failure; backported to the 3.6 branch per maintainer request.</li>
+        </ul>
+      </div>
+
+      <div class="oss-item" data-repo="OpenTelemetry Compile Instrumentation" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">A struct rule field colliding with an existing field surfaced three layers downstream as Go's own opaque compiler error</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go (Compile Instrumentation)</span><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/pull/1716">PR</a></div>
+        <ul>
+          <li>InstStructRule.validate already rejected new_field entries that duplicated each other, but applyStructRule had no check against fields already declared on the target struct; a colliding new_field was appended unconditionally, producing invalid Go with two same-named fields that only failed at the real build step.</li>
+          <li>Tracks existing field names before applying new_field entries and returns a clear error naming the struct and the colliding field, instead of letting it surface as Go's own duplicate-field compiler error with nothing pointing back at the rule.</li>
+        </ul>
+      </div>
 
       <div class="oss-item" data-repo="OpenTelemetry Go" style="border-left:3px solid #8a5cff">
         <div class="oss-item-head"><span class="oss-item-title">Documented every SDK package's supported environment variables in one place, across three PRs</span></div>
@@ -823,6 +841,15 @@
     <div class="oss-category" data-cat="silent-failure">
       <h3 class="oss-category-title">Silent Failure &amp; Data Loss</h3>
       <p class="oss-category-summary">The recurring pattern across these contributions: code assumes a value, response, or success case is always present, so when it isn't, the failure comes out as a swallowed error, missing data, or a crash instead of a controlled outcome.</p>
+
+      <div class="oss-item" data-repo="OpenTelemetry Compile Instrumentation" style="border-left:3px solid #8a5cff">
+        <div class="oss-item-head"><span class="oss-item-title">A decl rule could silently change the value of a constant it never named</span></div>
+        <div class="oss-item-links"><span class="oss-item-repo">OpenTelemetry Go (Compile Instrumentation)</span><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/pull/1737">PR</a><a href="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/issues/1735">Issue</a></div>
+        <ul>
+          <li>replaceDeclValue and wrapDeclValue only rewrote the targeted spec's own value in a parenthesized const block, with no check for later sibling ValueSpecs that inherit it under Go's iota implicit-repeat rule, so a rule could silently change a constant it never targeted.</li>
+          <li>Rejects the rewrite before it happens when a later sibling would be affected, naming the cascaded constants in the error; covered the replace and wrap paths, a chain stopped by an explicit sibling, and the no-cascade case.</li>
+        </ul>
+      </div>
 
       <div class="oss-item" data-repo="Juju" style="border-left:3px solid #60a5fa">
         <div class="oss-item-head"><span class="oss-item-title">Integration tests silently overwrote a developer's real AWS CLI credentials with no guard beyond a file-exists check</span></div>
